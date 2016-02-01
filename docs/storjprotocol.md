@@ -23,9 +23,9 @@
 
 ### Validate contract
 
-|           |           |
-|-----------|-----------|
-| Command   | validate  |
-| Arguments | contract  |
-| Returns   | bool      |
-| Raises    |           |
+|           |           |                                   |
+|-----------|-----------|-----------------------------------|
+| Command   | validate  |                                   |
+| Arguments | contract  | The contract to be validated.     |
+| Returns   | bool      | True if the contract is valid.    |
+| Raises    |           |                                   |
