@@ -1,0 +1,115 @@
+// syntax guide: http://www.graphviz.org/pdf/dotguide.pdf
+// compile: `dot -Tpdf dependencies.dot -o dependencies.pdf`
+
+
+digraph G {
+
+    // STORJNET
+    subgraph cluster_1 {
+        label = "Storjnet";
+        node [style=filled,color=white];
+        style=filled;
+        color=lightblue;
+
+        "Pub/Sub"; // enable publishing and subscribing to events
+        "Data transfer"; // full duplex data transfer
+        "Direct message"; // to shortcut the pubsub after peer found
+        "Transport"; // rpc calls and data transfer between clients
+    };
+    "Pub/Sub" -> "Transport";
+    "Direct message" -> "Transport";
+    "Data transfer" -> "Transport";
+    "Transport" -> "libsodium"; // end-to-end encryption
+    "Transport" -> "JSON-RPC";
+    "Transport" -> "REST";
+    "Transport" -> "SQLite"; // bandwidth limits
+    "Data transfer" -> CHISQRDTEST;
+    "Data transfer" -> graylist;
+
+    // STORJ PROTOCOL
+    subgraph cluster_2 {
+        label = "Storj Protocol";
+        node [style=filled,color=white];
+        style=filled;
+        color=lightgoldenrod;
+
+        "Contract"; // terms of a storage contract between peers
+        "Audit"; // track state of a contract over time
+    };
+    "Audit" -> "Contract"; // when/how to perform the audit
+    "Audit" -> "Data store"; // perform audit challange
+
+    // STORJNODE
+    subgraph cluster_3 {
+        label = "Storjnode";
+        node [style=filled,color=white];
+        style=filled;
+        color=lightseagreen;
+
+        "Agent"; // for sending/receiving of funds for services used 
+        "Data store"; // store data on drives
+        "Payment";
+        "Wallet";
+        "Shard DB"; // Store mapping of files + keys to shards
+        "Contract DB"; // Store contracts
+    };
+    "Agent" -> "Shard DB";
+    "Agent" -> "Contract DB";
+    "Shard DB" -> "SQLite";
+    "Contract DB" -> "SQLite";
+    "Data store" -> "libsodium"; // data is encrypted before stored
+    "Payment" -> "Wallet";
+    "Wallet" -> "Blockchain";
+    "Agent" -> "Direct message";
+    "Agent" -> "Audit"; // perform audits
+    "Agent" -> "Contract"; // verify agreed to use/provide a service
+    "Agent" -> "Ledger"; // verify service was used/provided
+    "Agent" -> "Payment"; // transfer funds
+    "Agent" -> "Pub/Sub"; // ask/bid on contracts
+    "Agent" -> "Data store"; // store data according to contract
+    "Agent" -> "Data transfer"; // pull data from other agent
+
+    // SIP 001
+    subgraph cluster_4 {
+        label = "SIP 001";
+        node [style=filled,color=white];
+        style=filled;
+
+        "Ledger"; // read/write historic events
+    }
+    "Ledger" -> "Blockchain";
+
+    // SIP 002
+    subgraph cluster_5 {
+        label = "SIP 002";
+        node [style=filled,color=white];
+        style=filled;
+
+        "REST"; // put/get shards
+    }
+
+    // SIP 003
+    subgraph cluster_6 {
+        label = "SIP 003";
+        node [style=filled,color=white];
+        style=filled;
+
+        CHISQRDTEST;
+    }
+
+    // SIP 004
+    subgraph cluster_7 {
+        label = "SIP 004";
+        node [style=filled,color=white];
+        style=filled;
+
+        graylist;
+    }
+
+    // EXTERNAL
+    "libsodium"; // for encryption/signing
+    "SQLite";
+    "Blockchain";
+    "JSON-RPC";
+
+}
