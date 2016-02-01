@@ -23,6 +23,7 @@
 
 ### Validate contract
 
+|           |           |
 |-----------|-----------|
 | Command   | validate  |
 | Arguments | contract  |
