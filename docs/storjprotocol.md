@@ -5,15 +5,15 @@
 
 ## Contract version 0 specification
 
-| Property          |      Type                         |
-|-------------------|:---------------------------------:|
-| version           | int=0                             |
-| renterid          | 160bit                            |
-| farmerid          | 160bit                            |
-| shardid           | 160bit                            |
-| time_begin        | 64Bit Unixtime                    |
-| time_duration     | 64Bit Unixtime                    |
-| payment_currency  | 64Bit Unixtime                    |
-| payment_amount    | 64Bit Unixtime                    |
-| audit_points      | [(64Bit Unixtime, value), ...]    |
+| Property  |      Type             | Description                               |
+|-----------|:---------------------:|:-----------------------------------------:|
+| version   | int=0                 |                                           |
+| renterid  | 160bit                |                                           |
+| farmerid  | 160bit                |                                           |
+| shardid   | 160bit                |                                           |
+| begin     | 64Bit Unixtime        | When the contract begins                  |
+| end       | 64Bit Unixtime        | When the contract ends                    |
+| currency  | integer               |                                           |
+| amount    | integer               |                                           |
+| audits    | [(float, float), ...] | Relative (time, amount), sum must be 1.0  |
 
