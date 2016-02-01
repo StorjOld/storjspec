@@ -19,7 +19,7 @@
 | audits    | [(float, float), ...] | Relative (time, amount), sum must be 1.0  |
 
 
-## API
+## User API
 
 ### Validate contract
 
