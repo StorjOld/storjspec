@@ -5,15 +5,15 @@
 
 ## Contract version 0 specification
 
-| Property          |      Type                 |
-|-------------------|:-------------------------:|
-| version           | int=0                     |
-| renterid          | 20 bytes                  |
-| farmerid          | 20 bytes                  |
-| shardid           | 20 bytes                  |
-| time_begin        | unixtime                  |
-| time_duration     | unixtime                  |
-| payment_currency  | unixtime                  |
-| payment_amount    | unixtime                  |
-| audit_points      | [(unixtime, value), ...]  |
+| Property          |      Type                         |
+|-------------------|:---------------------------------:|
+| version           | int=0                             |
+| renterid          | 160bit                            |
+| farmerid          | 160bit                            |
+| shardid           | 160bit                            |
+| time_begin        | 64Bit Unixtime                    |
+| time_duration     | 64Bit Unixtime                    |
+| payment_currency  | 64Bit Unixtime                    |
+| payment_amount    | 64Bit Unixtime                    |
+| audit_points      | [(64Bit Unixtime, value), ...]    |
 
