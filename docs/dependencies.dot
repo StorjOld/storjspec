@@ -69,42 +69,47 @@ digraph G {
     "Agent" -> "Data store"; // store data according to contract
     "Agent" -> "Data transfer"; // pull data from other agent
 
-    // SIP 001
-    subgraph cluster_4 {
-        label = "SIP 001";
-        node [style=filled,color=white];
-        style=filled;
+    subgraph cluster_8 {
+        label = "Storj Improvement Proposals";
 
-        "Ledger"; // read/write historic events
+        // SIP 001
+        subgraph cluster_4 {
+            label = "SIP 001";
+            node [style=filled,color=white];
+            style=filled;
+
+            "Ledger"; // read/write historic events
+        }
+
+        // SIP 002
+        subgraph cluster_5 {
+            label = "SIP 002";
+            node [style=filled,color=white];
+            style=filled;
+
+            "REST"; // put/get shards
+        }
+
+        // SIP 003
+        subgraph cluster_6 {
+            label = "SIP 003";
+            node [style=filled,color=white];
+            style=filled;
+
+            CHISQRDTEST;
+        }
+
+        // SIP 004
+        subgraph cluster_7 {
+            label = "SIP 004";
+            node [style=filled,color=white];
+            style=filled;
+
+            graylist;
+        }
+
     }
     "Ledger" -> "Blockchain";
-
-    // SIP 002
-    subgraph cluster_5 {
-        label = "SIP 002";
-        node [style=filled,color=white];
-        style=filled;
-
-        "REST"; // put/get shards
-    }
-
-    // SIP 003
-    subgraph cluster_6 {
-        label = "SIP 003";
-        node [style=filled,color=white];
-        style=filled;
-
-        CHISQRDTEST;
-    }
-
-    // SIP 004
-    subgraph cluster_7 {
-        label = "SIP 004";
-        node [style=filled,color=white];
-        style=filled;
-
-        graylist;
-    }
 
     // EXTERNAL
     "libsodium"; // for encryption/signing
