@@ -49,7 +49,7 @@ digraph G {
         "Agent"; // for sending/receiving of funds for services used 
         "Data store"; // store data on drives
         "Payment";
-        "Wallet";
+        "Wallet"; // one wallet for each payment currency
         "Shard DB"; // Store mapping of files + keys to shards
         "Contract DB"; // Store contracts
     };
