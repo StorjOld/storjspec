@@ -11,6 +11,7 @@
 | renterid  | string                | 160bit base58 encoded                     |
 | farmerid  | string                | 160bit base58 encoded                     |
 | shardid   | string                | 160bit base58 encoded                     |
+| shardsize | integer               | In bytes as a power of two.               |
 | begin     | integer               | Unixtime when the contract begins         |
 | duration  | integer               | Contract duration in seconds              |
 | end       | integer               | Unixtime when the contract ends           |

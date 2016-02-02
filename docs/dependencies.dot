@@ -12,19 +12,22 @@ digraph G {
         color=lightblue;
 
         "Pub/Sub"; // enable publishing and subscribing to events
-        "Data transfer"; // full duplex data transfer
-        "Direct message"; // to shortcut the pubsub after peer found
-        "Transport"; // rpc calls and data transfer between clients
+        "Data streams"; // full duplex data transfer
+        "Messaging"; // to shortcut the pubsub after peer found
+        "RPC"; // rpc calls and data transfer between clients
+        "E2EE"; // End-to-end encryption
+        "Bandwidth limiter";
+        "REST (SIP 002)"; // put/get shards
     };
-    "Pub/Sub" -> "Transport";
-    "Direct message" -> "Transport";
-    "Data transfer" -> "Transport";
-    "Transport" -> "libsodium"; // end-to-end encryption
-    "Transport" -> "JSON-RPC";
-    "Transport" -> "REST";
-    "Transport" -> "SQLite"; // bandwidth limits
-    "Data transfer" -> CHISQRDTEST;
-    "Data transfer" -> graylist;
+    "Pub/Sub" -> "RPC";
+    "Messaging" -> "RPC";
+    "Data streams" -> "RPC";
+    "RPC" -> "Bandwidth limiter";
+    "REST (SIP 002)" -> "Bandwidth limiter";
+    "Bandwidth limiter" -> "E2EE";
+    "E2EE" -> "Crypto";
+    "E2EE" -> "Transport";
+    "Bandwidth limiter" -> "Database";
 
     // STORJ PROTOCOL
     subgraph cluster_2 {
@@ -37,7 +40,8 @@ digraph G {
         "Audit"; // track state of a contract over time
     };
     "Audit" -> "Contract"; // when/how to perform the audit
-    "Audit" -> "Data store"; // perform audit challange
+    "Audit" -> "Store manager"; // perform audit challange
+    "Audit" -> "Ledger (SIP 001)"; // save result in ledger
 
     // STORJNODE
     subgraph cluster_3 {
@@ -46,75 +50,37 @@ digraph G {
         style=filled;
         color=lightseagreen;
 
-        "Agent"; // for sending/receiving of funds for services used 
-        "Data store"; // store data on drives
-        "Payment";
-        "Wallet"; // one wallet for each payment currency
-        "Shard DB"; // Store mapping of files + keys to shards
-        "Contract DB"; // Store contracts
+        "Roy"; // for sending/receiving of funds for services used 
+        "Store manager"; // store data on drives
+        "Wallet";
+        "Contract manager"; // Store contracts
+        "CHISQRDTEST (SIP 003)";
+        "Graylist (SIP 004)";
+        "Ledger (SIP 001)"; // read/write historic events
     };
-    "Agent" -> "Shard DB";
-    "Agent" -> "Contract DB";
-    "Shard DB" -> "SQLite";
-    "Contract DB" -> "SQLite";
-    "Data store" -> "libsodium"; // data is encrypted before stored
-    "Payment" -> "Wallet";
+    "Roy" -> "Contract manager";
+    "Contract manager" -> "Database";
+    "Store manager" -> "File system";
+    "Store manager" -> "Graylist (SIP 004)";
+    "Store manager" -> "Database";
+    "Graylist (SIP 004)" -> "CHISQRDTEST (SIP 003)";
+    "CHISQRDTEST (SIP 003)" -> "Data streams";
+    "CHISQRDTEST (SIP 003)" -> "REST (SIP 002)";
     "Wallet" -> "Blockchain";
-    "Agent" -> "Direct message";
-    "Agent" -> "Audit"; // perform audits
-    "Agent" -> "Contract"; // verify agreed to use/provide a service
-    "Agent" -> "Ledger"; // verify service was used/provided
-    "Agent" -> "Payment"; // transfer funds
-    "Agent" -> "Pub/Sub"; // ask/bid on contracts
-    "Agent" -> "Data store"; // store data according to contract
-    "Agent" -> "Data transfer"; // pull data from other agent
-
-    subgraph cluster_8 {
-        label = "Storj Improvement Proposals";
-
-        // SIP 001
-        subgraph cluster_4 {
-            label = "SIP 001";
-            node [style=filled,color=white];
-            style=filled;
-
-            "Ledger"; // read/write historic events
-        }
-
-        // SIP 002
-        subgraph cluster_5 {
-            label = "SIP 002";
-            node [style=filled,color=white];
-            style=filled;
-
-            "REST"; // put/get shards
-        }
-
-        // SIP 003
-        subgraph cluster_6 {
-            label = "SIP 003";
-            node [style=filled,color=white];
-            style=filled;
-
-            CHISQRDTEST;
-        }
-
-        // SIP 004
-        subgraph cluster_7 {
-            label = "SIP 004";
-            node [style=filled,color=white];
-            style=filled;
-
-            graylist;
-        }
-
-    }
-    "Ledger" -> "Blockchain";
+    "Roy" -> "Messaging";
+    "Roy" -> "Audit"; // perform audits
+    "Roy" -> "Contract"; // verify agreed to use/provide a service
+    "Roy" -> "Ledger (SIP 001)"; // verify service was used/provided
+    "Roy" -> "Wallet"; // transfer funds
+    "Roy" -> "Pub/Sub"; // ask/bid on contracts
+    "Roy" -> "Store manager";
+    "Ledger (SIP 001)" -> "Blockchain";
 
     // EXTERNAL
-    "libsodium"; // for encryption/signing
-    "SQLite";
+    "File system";
+    "Crypto"; // for encryption/signing
+    "Database";
     "Blockchain";
-    "JSON-RPC";
+    "Transport";
 
 }
