@@ -9,19 +9,31 @@
 * Proceed to handshake for file transfer 
 
 
+## Contract validation
+
+ * A contract is valid (not complete) if it matches the [schema](schema.json).
+ * A contract is complete if all fields are filled (not `null`).
+ * The signatures cover all fields excluding signaturs in alphanumeric order.
+
+
+## Contract fields
+
 | Property                  | Type                  | Description                               |
 |---------------------------|:---------------------:|:-----------------------------------------:|
-| version                   | string                |                                           |
+| version                   | string                | Random 256bit hex encoded id.             |
 |                           |                       |                                           |
-| renter_id                 | string                | 160bit base58 encoded                     |
-| renter_address            | string                | IPv4 or IPv6 or domain                    |
+| renter_id                 | string                | 160bit base58 encoded (bitcoin address)   |
+| renter_address            | string                | IPv4 or IPv6                              |
 | renter_port               | integer               | 0 <= port < 65535                         |
-| farmer_id                 | string                | 160bit base58 encoded                     |
-| farmer_address            | string                | IPv4 or IPv6 or domain                    |
+| renter_signature          | string                | 65byte base64 encoded bitcoin signature   |
+| farmer_id                 | string                | 160bit base58 encoded (bitcoin address)   |
+| farmer_address            | string                | IPv4 or IPv6                              |
 | farmer_port               | integer               | 0 <= port < 65535                         |
+| farmer_signature          | string                | 65byte base64 encoded bitcoin signature   |
 |                           |                       |                                           |
-| store_data_size           | integer               | In bytes as a power of two (2^size).      |
-| store_data_hash           | string                | Hex encoded sha256(sha256(data))          |
+| data_size                 | integer               | In bytes as a power of two (2^size).      |
+| data_hash                 | string                | Hex encoded sha256(sha256(data))          |
+|                           |                       |                                           |
 | store_begin               | integer               | Unixtime when the storage begins          |
 | store_duration            | integer               | Storage duration in seconds               |
 | store_end                 | integer               | Unixtime when the storage ends            |
