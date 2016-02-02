@@ -3,17 +3,33 @@
 
 
 digraph G {
+    node [shape="box", style="filled", color="black", fillcolor="white"];
+
+    // LEGEND
+    subgraph cluster_0 {
+        label = "Status legend";
+
+        "Complete" [fillcolor=green, shape=ellipse];
+        "Working API" [fillcolor=yellow, shape=ellipse];
+        "Partial" [fillcolor=orange, shape=ellipse];
+
+        "Full spec" [shape=ellipse];
+        "Partial spec" [shape=hexagon];
+        "Undefined spec" [shape=box];
+    };
+    "Complete" -> "Working API" -> "Partial";
+    "Full spec" -> "Partial spec" -> "Undefined spec";
+
 
     // STORJNET
     subgraph cluster_1 {
         label = "Storjnet";
-        node [style=filled,color=white];
         style=filled;
         color=lightblue;
 
-        "Pub/Sub"; // enable publishing and subscribing to events
-        "Data streams"; // full duplex data transfer
-        "Messaging"; // to shortcut the pubsub after peer found
+        "Pub/Sub" [shape=hexagon]; // enable publishing and subscribing to events
+        "Data streams" [shape=hexagon]; // full duplex data transfer
+        "Messaging" [shape=hexagon]; // to shortcut the pubsub after peer found
         "RPC"; // rpc calls and data transfer between clients
         "E2EE"; // End-to-end encryption
         "Bandwidth limiter";
@@ -32,12 +48,11 @@ digraph G {
     // STORJ PROTOCOL
     subgraph cluster_2 {
         label = "Storj Protocol";
-        node [style=filled,color=white];
         style=filled;
         color=lightgoldenrod;
 
-        "Contract"; // terms of a storage contract between peers
-        "Audit"; // track state of a contract over time
+        "Contract" [shape=hexagon]; // terms of a storage contract between peers
+        "Audit" [fillcolor=orange, shape=hexagon]; // track state of a contract over time
     };
     "Audit" -> "Contract"; // when/how to perform the audit
     "Audit" -> "Store manager"; // perform audit challange
@@ -46,17 +61,16 @@ digraph G {
     // STORJNODE
     subgraph cluster_3 {
         label = "Storjnode";
-        node [style=filled,color=white];
         style=filled;
         color=lightseagreen;
 
         "Roy"; // for sending/receiving of funds for services used 
-        "Store manager"; // store data on drives
-        "Wallet";
+        "Store manager" [fillcolor=orange, shape=hexagon];
+        "Wallet" [fillcolor=orange, shape=hexagon];
         "Contract manager"; // Store contracts
         "CHISQRDTEST (SIP 003)";
         "Graylist (SIP 004)";
-        "Ledger (SIP 001)"; // read/write historic events
+        "Ledger (SIP 001)" [fillcolor=orange, shape=hexagon];
     };
     "Roy" -> "Contract manager";
     "Contract manager" -> "Database";
@@ -77,10 +91,9 @@ digraph G {
     "Ledger (SIP 001)" -> "Blockchain";
 
     // EXTERNAL
-    "File system";
-    "Crypto"; // for encryption/signing
-    "Database";
-    "Blockchain";
-    "Transport";
-
+    "File system" [fillcolor=green, shape=ellipse];
+    "Crypto" [fillcolor=green, shape=ellipse];
+    "Database" [fillcolor=green, shape=ellipse];
+    "Blockchain" [fillcolor=green, shape=ellipse];
+    "Transport" [fillcolor=green, shape=ellipse];
 }
