@@ -23,7 +23,7 @@
 | version                   | string                | Random 256bit hex encoded id.             |
 |                           |                       |                                           |
 | renter_id                 | string                | 160bit base58 encoded (bitcoin address)   |
-| renter_address            | string                | IPv4 or IPv6                              |
+| renter_address            | string                | IPv4 or IPv6 or hostname                  |
 | renter_port               | integer               | 0 <= port < 65535                         |
 | renter_signature          | string                | 65byte base64 encoded bitcoin signature   |
 | farmer_id                 | string                | 160bit base58 encoded (bitcoin address)   |
@@ -38,13 +38,17 @@
 | store_duration            | integer               | Storage duration in seconds               |
 | store_end                 | integer               | Unixtime when the storage ends            |
 |                           |                       |                                           |
-| audit_algorithm           | string                |                                           |
-| audit_count               | string                |                                           |
-|                           |                       |                                           |
-| payment_currency          | string                |                                           |
-| payment_amount            | integer               |                                           |
-| payment_download_price    | integer               |                                           |
-| payment_destination       | string                |                                           |
-| payment_source            | string                |                                           |
-| payment_settlements       | integer               |                                           |
-| payment_interval          | integer               |                                           |
+| audit_algorithm           | string                | TODO document                             |
+| audit_count               | string                | TODO document                             |
+|                           |                       | TODO document                             |
+| payment_currency          | string                | TODO document                             |
+| payment_amount            | integer               | TODO document                             |
+| payment_download_price    | integer               | TODO document                             |
+| payment_destination       | string                | TODO document                             |
+| payment_source            | string                | TODO document                             |
+| payment_settlements       | integer               | TODO document                             |
+| payment_interval          | integer               | TODO document                             |
+
+
+# TODO define initial currcencies
+

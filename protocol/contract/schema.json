@@ -1,82 +1,90 @@
 {
-  type: 'object',
-  properties: {
-    version: {
-      type: 'number'
-    },
-    duration: {
-      type: 'array',
-      items: [
-        { type: 'number' },
-        { type: 'number' }
-      ]
-    },
-    shard_hash: {
-      type: 'string',
-      minLength: 64,
-      maxLength: 64
-    },
-    shard_size: {
-      type: 'number',
-      minimum: 0
-    },
-    farmer: {
-      type: 'array',
-      minItems: 3,
-      maxItems: 3,
-      items: [
-        { type: 'string' },
-        { type: 'number' },
-        { type: 'string' }
-      ]
-    },
-    renter: {
-      type: 'array',
-      minItems: 3,
-      maxItems: 3,
-      items: [
-        { type: 'string' },
-        { type: 'number' },
-        { type: 'string' }
-      ]
-    },
-    payment_unit: {
-      type: 'string',
-      minLength: 3,
-      maxLength: 4
-    },
-    payment_amount: {
-      type: 'number',
-      minimum: 0
-    },
-    payment_destination: {
-      type: 'string',
-      minLength: 26,
-      maxLength: 35
-    },
-    payment_source: {
-      type: 'string',
-      minLength: 26,
-      maxLength: 35
-    },
-    payment_download_price: {
-      type: 'number',
-      minimum: 0
-    },
-    payment_schedule: {
-      type: 'array',
-      minItems: 2,
-      maxItems: 2,
-      items: { type: 'number' }
-    },
-    audit_strategy: {
-      type: 'string'
-    },
-    audit_schedule: {
-      type: 'array',
-      minItems: 2,
-      maxItems: 2,
-      items: { type: 'number' }
+    "type": 'object',
+    "properties": {
+        "version": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64:64}$"
+        },
+        "renter_id": {
+            "type": "string",
+            "pattern": "^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$"
+        },
+        "renter_address": {
+            "type": "string",
+            "format": ["ipv4", "ipv6", "hostname"]
+        },
+        "renter_port": {
+            "type": "integer",
+            "minimum": 1, 
+            "maximum": 65535 
+        },
+        "renter_signature": {
+            "type": "string"
+        },
+        "farmer_id": {
+            "type": "string",
+            "pattern": "^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$"
+        },
+        "farmer_address": {
+            "type": "string",
+            "format": ["ipv4", "ipv6", "hostname"]
+        },
+        "farmer_port": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+        },
+        "farmer_signature": {
+            "type": "string"
+        },
+        "data_size": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "data_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64:64}$"
+        },
+        "store_begin": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "store_duration": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "store_end": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "audit_algorithm": {
+            "type": "string"
+        },
+        "audit_count": {
+            "type": "string"
+        },
+        "payment_currency": {
+            "type": "string"
+        },
+        "payment_amount": {
+            "type": "integer"
+        },
+        "payment_download_price": {
+            "type": "integer"
+        },
+        "payment_destination": {
+            "type": "string"
+        },
+        "payment_source": {
+            "type": "string"
+        },
+        "payment_settlements": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "payment_interval": {
+            "type": "integer",
+            "minimum": 0
+        }
     }
-  }
 }
