@@ -1,3 +1,3 @@
 
 graphs:
-	dot -Tpdf docs/dependencies.dot -o docs/dependencies.pdf
+	dot -Tpdf status.dot -o status.pdf

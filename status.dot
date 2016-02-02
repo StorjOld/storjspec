@@ -51,7 +51,7 @@ digraph G {
         style=filled;
         color=lightgoldenrod;
 
-        "Contract" [shape=hexagon]; // terms of a storage contract between peers
+        "Contract" [shape=ellipse]; // terms of a storage contract between peers
         "Audit" [fillcolor=orange, shape=hexagon]; // track state of a contract over time
     };
     "Audit" -> "Contract"; // when/how to perform the audit

@@ -1,1 +1,82 @@
-TODO
+{
+  type: 'object',
+  properties: {
+    version: {
+      type: 'number'
+    },
+    duration: {
+      type: 'array',
+      items: [
+        { type: 'number' },
+        { type: 'number' }
+      ]
+    },
+    shard_hash: {
+      type: 'string',
+      minLength: 64,
+      maxLength: 64
+    },
+    shard_size: {
+      type: 'number',
+      minimum: 0
+    },
+    farmer: {
+      type: 'array',
+      minItems: 3,
+      maxItems: 3,
+      items: [
+        { type: 'string' },
+        { type: 'number' },
+        { type: 'string' }
+      ]
+    },
+    renter: {
+      type: 'array',
+      minItems: 3,
+      maxItems: 3,
+      items: [
+        { type: 'string' },
+        { type: 'number' },
+        { type: 'string' }
+      ]
+    },
+    payment_unit: {
+      type: 'string',
+      minLength: 3,
+      maxLength: 4
+    },
+    payment_amount: {
+      type: 'number',
+      minimum: 0
+    },
+    payment_destination: {
+      type: 'string',
+      minLength: 26,
+      maxLength: 35
+    },
+    payment_source: {
+      type: 'string',
+      minLength: 26,
+      maxLength: 35
+    },
+    payment_download_price: {
+      type: 'number',
+      minimum: 0
+    },
+    payment_schedule: {
+      type: 'array',
+      minItems: 2,
+      maxItems: 2,
+      items: { type: 'number' }
+    },
+    audit_strategy: {
+      type: 'string'
+    },
+    audit_schedule: {
+      type: 'array',
+      minItems: 2,
+      maxItems: 2,
+      items: { type: 'number' }
+    }
+  }
+}
