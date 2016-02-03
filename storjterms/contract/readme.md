@@ -52,5 +52,5 @@ A storage contract defines obligations between farmer and renter.
 
 
 # TODO add ipv6 and hostname validation to schema
-# TODO define initial currcencies
+# TODO define initial currencies
 
