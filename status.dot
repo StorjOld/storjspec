@@ -1,5 +1,6 @@
 // syntax guide: http://www.graphviz.org/pdf/dotguide.pdf
-// compile: `dot -Tpdf dependencies.dot -o dependencies.pdf`
+// compile png: `dot -Tpng dependencies.dot -o dependencies.png`
+// compile pdf: `dot -Tpdf dependencies.dot -o dependencies.pdf`
 
 
 digraph G {
@@ -45,9 +46,9 @@ digraph G {
     "E2EE" -> "Transport";
     "Bandwidth limiter" -> "Database";
 
-    // STORJ PROTOCOL
+    // STORJTERMS
     subgraph cluster_2 {
-        label = "Storj Protocol";
+        label = "Storjterms";
         style=filled;
         color=lightgoldenrod;
 
