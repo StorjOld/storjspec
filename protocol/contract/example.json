@@ -20,6 +20,7 @@
     "payment_download_price": 0,
     "payment_destination": "1HtBKxEWpnAQpTd7URKmniW6afeKTzQDwY",
     "payment_source": "1DNYsfZBe5ajKkRnpMmqDQSaNuqc6Yxw95",
+    "payment_begin": 2000000000,
     "payment_settlements": 0,
     "payment_interval": 0
 }

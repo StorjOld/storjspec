@@ -78,6 +78,10 @@
         "payment_source": {
             "type": ["string", "null"]
         },
+        "payment_begin": {
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
         "payment_settlements": {
             "type": ["integer", "null"],
             "minimum": 0

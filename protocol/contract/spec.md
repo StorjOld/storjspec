@@ -46,11 +46,11 @@ A storage contract defines obligations between farmer and renter.
 | payment_download_price    | integer               | TODO document                                                         |
 | payment_destination       | string                | TODO document                                                         |
 | payment_source            | string                | TODO document                                                         |
-| payment_settlements       | integer               | TODO document                                                         |
-| payment_interval          | integer               | TODO document                                                         |
+| payment_begin             | integer               | Unixtime of first payment                                             |
+| payment_settlements       | integer               | Number of payments to be made.                                        |
+| payment_interval          | integer               | The interval in which payments are made.                              |
 
 
-# FIXME when exactly payments are due is unclear
 # TODO add ipv6 and hostname validation to schema
 # TODO define initial currcencies
 
