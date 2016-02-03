@@ -1,3 +1,3 @@
 
 graphs:
-	dot -Tpdf status.dot -o status.pdf
+	dot -Tpng status.dot -o status.png
