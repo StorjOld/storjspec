@@ -1,89 +1,90 @@
 {
-    "type": 'object',
+    "type": "object",
     "properties": {
         "version": {
             "type": "string",
-            "pattern": "^[0-9a-f]{64:64}$"
+            "pattern": "^[0-9a-f]{64,64}$"
         },
         "renter_id": {
-            "type": "string",
+            "type": ["string", "null"],
             "pattern": "^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$"
         },
         "renter_address": {
-            "type": "string",
-            "format": ["ipv4", "ipv6", "hostname"]
+            "type": ["string", "null"],
+            "format": "ipv4"
         },
         "renter_port": {
-            "type": "integer",
+            "type": ["integer", "null"],
             "minimum": 1, 
             "maximum": 65535 
         },
         "renter_signature": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "farmer_id": {
-            "type": "string",
+            "type": ["string", "null"],
             "pattern": "^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$"
         },
         "farmer_address": {
-            "type": "string",
-            "format": ["ipv4", "ipv6", "hostname"]
+            "type": ["string", "null"],
+            "format": "ipv4"
         },
         "farmer_port": {
-            "type": "integer",
+            "type": ["integer", "null"],
             "minimum": 1,
             "maximum": 65535
         },
         "farmer_signature": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "data_size": {
-            "type": "integer",
+            "type": ["integer", "null"],
             "minimum": 0
         },
         "data_hash": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{64:64}$"
+            "type": ["string", "null"],
+            "pattern": "^[0-9a-f]{64,64}$"
         },
         "store_begin": {
-            "type": "integer",
+            "type": ["integer", "null"],
             "minimum": 0
         },
         "store_duration": {
-            "type": "integer",
+            "type": ["integer", "null"],
             "minimum": 0
         },
         "store_end": {
-            "type": "integer",
+            "type": ["integer", "null"],
             "minimum": 0
         },
         "audit_algorithm": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "audit_count": {
-            "type": "string"
+            "type": ["integer", "null"],
+            "minimum": 0
         },
         "payment_currency": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "payment_amount": {
-            "type": "integer"
+            "type": ["integer", "null"]
         },
         "payment_download_price": {
-            "type": "integer"
+            "type": ["integer", "null"]
         },
         "payment_destination": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "payment_source": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "payment_settlements": {
-            "type": "integer",
+            "type": ["integer", "null"],
             "minimum": 0
         },
         "payment_interval": {
-            "type": "integer",
+            "type": ["integer", "null"],
             "minimum": 0
         }
     }
