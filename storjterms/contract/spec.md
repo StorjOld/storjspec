@@ -24,11 +24,11 @@ A storage contract defines obligations between farmer and renter.
 |                           |                       |                                                                       |
 | renter_id                 | string                | 160bit base58 encoded (bitcoin address)                               |
 | renter_address            | string                | IPv4 or IPv6 or hostname                                              |
-| renter_port               | integer               | 0 < port < 65535                                                      |
+| renter_port               | integer               | 0 < port <= 65535                                                      |
 | renter_signature          | string                | 65byte base64 encoded bitcoin signature                               |
 | farmer_id                 | string                | 160bit base58 encoded (bitcoin address)                               |
 | farmer_address            | string                | IPv4 or IPv6 or hostname                                              |
-| farmer_port               | integer               | 0 < port < 65535                                                      |
+| farmer_port               | integer               | 0 < port <= 65535                                                      |
 | farmer_signature          | string                | 65byte base64 encoded bitcoin signature                               |
 |                           |                       |                                                                       |
 | data_size                 | integer               | In bytes as a power of two (2^size).                                  |
