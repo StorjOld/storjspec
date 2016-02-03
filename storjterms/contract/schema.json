@@ -63,6 +63,17 @@
             "type": ["integer", "null"],
             "minimum": 0
         },
+        "heartbeat_algorithm": {
+            "type": ["string", "null"]
+        },
+        "heartbeat_count": {
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
+        "heartbeat_coverage": {
+            "type": ["integer", "null"],
+            "minimum": 0
+        },
         "payment_currency": {
             "type": ["string", "null"]
         },

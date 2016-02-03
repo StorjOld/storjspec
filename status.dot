@@ -54,10 +54,12 @@ digraph G {
 
         "Contract" [shape=hexagon]; // terms of a storage contract between peers
         "Audit" [fillcolor=orange, shape=hexagon]; // track state of a contract over time
+        "Heartbeat";
     };
     "Audit" -> "Contract"; // when/how to perform the audit
     "Audit" -> "Store manager"; // perform audit challange
     "Audit" -> "Ledger (SIP 001)"; // save result in ledger
+    "Heartbeat" -> "Contract";
 
     // STORJNODE
     subgraph cluster_3 {
@@ -85,6 +87,7 @@ digraph G {
     "Roy" -> "Messaging";
     "Roy" -> "Audit"; // perform audits
     "Roy" -> "Contract"; // verify agreed to use/provide a service
+    "Roy" -> "Heartbeat";
     "Roy" -> "Ledger (SIP 001)"; // verify service was used/provided
     "Roy" -> "Wallet"; // transfer funds
     "Roy" -> "Pub/Sub"; // ask/bid on contracts
