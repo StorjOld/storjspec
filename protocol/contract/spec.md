@@ -1,19 +1,19 @@
 # Storage contract
 
-* Establishes a relationship between farmer and renter
-* Defines behavior pattern for storage
-* One party creates contract proposal
-* Bid/Ask is broadcast to the network
-* Prospective partner responds with signed counteroffer
-* Once both parties sign the same version, contract is complete
-* Proceed to handshake for file transfer 
+A storage contract defines obligations between farmer and renter.
 
 
-## Contract validation
+## Contract rules
 
  * A contract is valid (not complete) if it matches the [schema](schema.json).
  * A contract is complete if all fields are filled (not `null`).
  * The signatures cover all fields excluding signaturs in alphanumeric order.
+
+## Establishing a binding contract
+
+ * One party creates an incomplete bid/ask contract and publishes on the network.
+ * Prospective partner responds with signed counteroffer.
+ * Counteroffers continue until both parties signed a complete contract which is then binding.
 
 
 ## Contract fields
