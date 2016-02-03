@@ -7,7 +7,7 @@ A storage contract defines obligations between farmer and renter.
 
  * A contract is valid (not complete) if it matches the [schema](schema.json).
  * A contract is complete if all fields are filled (not `null`).
- * The signatures cover all fields excluding signaturs in alphanumeric order.
+ * The signatures cover all fields excluding signaturs serialized in alphanumeric order.
 
 ## Establishing a binding contract
 
@@ -22,13 +22,13 @@ A storage contract defines obligations between farmer and renter.
 |---------------------------|:---------------------:|:---------------------------------------------------------------------:|
 | type                      | string                | "56ce3e837f575827cb5a94e2b609756a48fa4a3882f5e762b262af31f432878d"    |
 |                           |                       |                                                                       |
-| renter_id                 | string                | 160bit base58 encoded (bitcoin address)                               |
+| renter_id                 | string                | 160bit base58 encoded bitcoin address (do not used for payments!)     |
 | renter_address            | string                | IPv4 or IPv6 or hostname                                              |
-| renter_port               | integer               | 0 < port <= 65535                                                      |
+| renter_port               | integer               | 0 < port <= 65535                                                     |
 | renter_signature          | string                | 65byte base64 encoded bitcoin signature                               |
-| farmer_id                 | string                | 160bit base58 encoded (bitcoin address)                               |
+| farmer_id                 | string                | 160bit base58 encoded bitcoin address (do not used for payments!)     |
 | farmer_address            | string                | IPv4 or IPv6 or hostname                                              |
-| farmer_port               | integer               | 0 < port <= 65535                                                      |
+| farmer_port               | integer               | 0 < port <= 65535                                                     |
 | farmer_signature          | string                | 65byte base64 encoded bitcoin signature                               |
 |                           |                       |                                                                       |
 | data_size                 | integer               | In bytes as a power of two (2^size).                                  |
