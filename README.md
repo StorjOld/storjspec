@@ -5,15 +5,15 @@ storj application.
 
 It consists of three main components:
 
-## [storjnet](storjnet/overview.md)
+## [storjnet](storjnet)
 
 Responsible node networking and communication.
 
-## [storjterms](storjterms/overview.md) 
+## [storjterms](storjterms) 
 
 Responsible for storage contracts and auditing terms.
 
-## [storjnode](storjnode/overview.md)
+## [storjnode](storjnode)
 
 Reference client that is not part of the protocol, but included as defines
 useful components required by most implementations.
