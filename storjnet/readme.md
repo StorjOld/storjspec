@@ -3,7 +3,7 @@
 [Python reference implimentation](https://github.com/storj/storjnet)
 
 
-## User API Overview
+## User API Calls
 
 | Command               | Arguments                   | Returns             | Description                                                   |
 |-----------------------|-----------------------------|---------------------|---------------------------------------------------------------|

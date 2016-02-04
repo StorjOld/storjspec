@@ -7,7 +7,7 @@ A storage contract defines obligations between farmer and renter.
 
  * A contract is valid (not complete) if it matches the [schema](schema.json).
  * A contract is complete if all fields are filled (not `null`).
- * The signatures cover all fields excluding signaturs serialized in alphanumeric order.
+ * The signatures cover all fields excluding signatures serialized in alphanumeric order.
 
 ## Establishing a binding contract
 
@@ -17,6 +17,8 @@ A storage contract defines obligations between farmer and renter.
 
 
 ## Contract fields
+
+TODO add ipv6 and hostname validation to schema
 
 | Property                  | Type                  | Description                                                           |
 |---------------------------|:---------------------:|:---------------------------------------------------------------------:|
@@ -55,6 +57,14 @@ A storage contract defines obligations between farmer and renter.
 | payment_interval          | integer               | The interval in which payments are made.                              |
 
 
-# TODO add ipv6 and hostname validation to schema
-# TODO define initial currencies
+## User API Calls
 
+| Command               | Arguments                   | Returns             | Description                                                   |
+|-----------------------|-----------------------------|---------------------|---------------------------------------------------------------|
+| sign                  | contract, key               | contract            | Sign contract (all fields except signatures must be filled.   |
+| is_valid              | contract                    | bool                | Returns true if given object matches the contract schema.     |
+| is_complete           | contract                    | bool                | Returns true if given object is a complete signed contract.   |
+
+
+
+# TODO define initial currencies
