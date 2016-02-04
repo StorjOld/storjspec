@@ -60,6 +60,8 @@ digraph G {
     "Audit" -> "Store manager"; // perform audit challange
     "Audit" -> "Ledger (SIP 001)"; // save result in ledger
     "Heartbeat" -> "Contract";
+    "Heartbeat" -> "Store manager"; // perform heartbeat challange
+    "Heartbeat" -> "Ledger (SIP 001)"; // save result in ledger
 
     // STORJNODE
     subgraph cluster_3 {
