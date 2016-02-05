@@ -1,6 +1,6 @@
 // syntax guide: http://www.graphviz.org/pdf/dotguide.pdf
-// compile png: `dot -Tpng dependencies.dot -o dependencies.png`
-// compile pdf: `dot -Tpdf dependencies.dot -o dependencies.pdf`
+// compile png: `dot -Tpng status.dot -o status.png`
+// compile pdf: `dot -Tpdf status.dot -o status.pdf`
 
 
 digraph G {

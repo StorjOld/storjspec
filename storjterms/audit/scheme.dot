@@ -1,0 +1,19 @@
+// syntax guide: http://www.graphviz.org/pdf/dotguide.pdf
+// compile png: `dot -Tpng status.dot -o status.png`
+// compile pdf: `dot -Tpdf status.dot -o status.pdf`
+
+digraph G {
+    label="
+    Merkle leaf = sha256(response + constant)
+    response = sha256(challenge + shard data)
+    "
+
+    rankdir = BT;
+
+    "00" -> 0;
+    "01" -> 0;
+    "10" -> 1;
+    "11" -> 1;
+    0 -> "Merkle root"
+    1 -> "Merkle root"
+}

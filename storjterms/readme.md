@@ -1,14 +1,7 @@
-# Storj core protocol layer
+# Storj terms specification and compatibility tests
 
-[Python reference implimentation](https://github.com/storj/storjprotocol)
+[Python reference implimentation](https://github.com/storj/storjterms)
 
-## User API
-
-### Validate contract
-
-|           |           |                                   |
-|-----------|-----------|-----------------------------------|
-| Command   | validate  |                                   |
-| Arguments | contract  | The contract to be validated.     |
-| Returns   | bool      | True if the contract is valid.    |
-| Raises    |           |                                   |
+ * [contract](contract): A storage contract defines obligations between farmer and renter.
+ * [audit](audit): Provides proof of storage.
+ * [heartbeat](heartbeat): Provides proof of availability. 
