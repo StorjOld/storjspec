@@ -36,16 +36,16 @@ TODO add ipv6 and hostname validation to schema
 | data_size                 | integer               | In bytes as a power of two (2^size).                                  |
 | data_hash                 | string                | Hex encoded sha256(sha256(data))                                      |
 |                           |                       |                                                                       |
-| store_begin               | integer               | Unixtime when the storage begins                                      |
-| store_duration            | integer               | Storage duration in seconds                                           |
-| store_end                 | integer               | Unixtime when the storage ends                                        |
+| store_begin               | integer               | Unixtime or block when the storage begins                             |
+| store_duration            | integer               | Storage duration in seconds/block                                     |
+| store_end                 | integer               | Unixtime or block when the storage ends                               |
 |                           |                       |                                                                       |
 | audit_algorithm           | string                | TODO document                                                         |
 | audit_count               | integer               | TODO document                                                         |
 | audit_merkle_root         | string                | Hex encoded 256bit merkle root of audit merkle tree.                  | 
 |                           |                       |                                                                       |
 | heartbeat_algorithm       | string                | TODO document                                                         |
-| heartbeat_interval        | integer               | Seconds between heartbeats                                            |
+| heartbeat_interval        | integer               | Seconds/blocks between heartbeats                                     |
 | heartbeat_coverage        | integer               | Size of data covered by a heartbeat in bytes                          |
 |                           |                       |                                                                       |
 | payment_currency          | string                | TODO document                                                         |
@@ -53,7 +53,7 @@ TODO add ipv6 and hostname validation to schema
 | payment_download_price    | integer               | Price per download of stored data.                                    |
 | payment_destination       | string                | Payment information needed to pay to farmer.                          |
 | payment_source            | string                | Payment information needed to pay to renter (negative payment).       |
-| payment_begin             | integer               | Unixtime of first payment                                             |
+| payment_begin             | integer               | Unixtime/block of first payment                                       |
 | payment_settlements       | integer               | Number of payments to be made.                                        |
 | payment_interval          | integer               | The interval in which payments are made.                              |
 
