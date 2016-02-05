@@ -4,10 +4,7 @@
 
 
 digraph G {
-    label="
-    Merkle leaf = sha256(response + constant)
-    response = sha256(challenge + shard data)
-    "
+    label="Merkle leaf = sha256(sha256(challenge + shard data))"
 
     rankdir = BT;
 

@@ -47,7 +47,6 @@ class TestIsValidSpec(unittest.TestCase, _AbsTestIsValid):
             return False
 
 
-@unittest.skip("storjterms-py not ready")
 class TestIsValid(unittest.TestCase, _AbsTestIsValid):
     """Test that the is_valid call from the rpc implementation is correct."""
 
