@@ -101,5 +101,35 @@
             "type": ["integer", "null"],
             "minimum": 0
         }
-    }
+    },
+    "additionalProperties": false,
+    "required": [
+        "type",
+        "renter_id",
+        "renter_address",
+        "renter_port",
+        "renter_signature",
+        "farmer_id",
+        "farmer_address",
+        "farmer_port",
+        "farmer_signature",
+        "data_size",
+        "data_hash",
+        "store_begin",
+        "store_duration",
+        "store_end",
+        "audit_algorithm",
+        "audit_count",
+        "heartbeat_algorithm",
+        "heartbeat_count",
+        "heartbeat_coverage",
+        "payment_currency",
+        "payment_amount",
+        "payment_download_price",
+        "payment_destination",
+        "payment_source",
+        "payment_begin",
+        "payment_settlements",
+        "payment_interval"
+    ]
 }
