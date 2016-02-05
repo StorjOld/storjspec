@@ -10,12 +10,13 @@
 
 | Command                | Arguments                    | Returns       | Description                                                   |
 |------------------------|------------------------------|---------------|---------------------------------------------------------------|
-| contract_sign          | contract, key                | contract      | Sign contract (all fields except signatures must be filled).  |
 | contract_is_valid      | contract                     | bool          | Returns true if given object matches the contract schema.     |
+| contract_sign          | contract, key                | contract      | Sign contract (all fields except signatures must be filled).  |
 | contract_is_complete   | contract                     | bool          | Returns true if given object is a complete signed contract.   |
 |                        |                              |               |                                                               |
+| audit_prepare          | shardid, challenges          | leaves        | TODO add documentation                                        |
 | audit_perform          | shardid, leaves, challenge   | proof         | Proof format: [[node, [leaf, [response]]], node]              |
-| audit_is_valid         | root, numchallanges, proof   | bool          | TODO add documentation                                        |
+| audit_validate         | root, numchallenges, proof   | bool          | TODO add documentation                                        |
 
 
 ## Global hash function
