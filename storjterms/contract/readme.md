@@ -58,7 +58,4 @@ TODO add ipv6 and hostname validation to schema
 | payment_interval          | integer               | The interval in which payments are made.                              |
 
 
-
-
-
 # TODO define initial currencies
