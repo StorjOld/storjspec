@@ -64,7 +64,7 @@ TODO add ipv6 and hostname validation to schema
 
 | Command       | Arguments         | Returns       | Description                                                   |
 |---------------|-------------------|---------------|---------------------------------------------------------------|
-| sign          | contract, key     | contract      | Sign contract (all fields except signatures must be filled.   |
+| sign          | contract, key     | contract      | Sign contract (all fields except signatures must be filled).   |
 | is_valid      | contract          | bool          | Returns true if given object matches the contract schema.     |
 | is_complete   | contract          | bool          | Returns true if given object is a complete signed contract.   |
 
