@@ -42,6 +42,7 @@ TODO add ipv6 and hostname validation to schema
 |                           |                       |                                                                       |
 | audit_algorithm           | string                | TODO document                                                         |
 | audit_count               | integer               | TODO document                                                         |
+| audit_merkle_root         | string                | Hex encoded 256bit merkle root of audit merkle tree.                  | 
 |                           |                       |                                                                       |
 | heartbeat_algorithm       | string                | TODO document                                                         |
 | heartbeat_interval        | integer               | Seconds between heartbeats                                            |
@@ -57,16 +58,6 @@ TODO add ipv6 and hostname validation to schema
 | payment_interval          | integer               | The interval in which payments are made.                              |
 
 
-# TODO add audit merkel root
-
-
-## User API Calls
-
-| Command       | Arguments         | Returns       | Description                                                   |
-|---------------|-------------------|---------------|---------------------------------------------------------------|
-| sign          | contract, key     | contract      | Sign contract (all fields except signatures must be filled.   |
-| is_valid      | contract          | bool          | Returns true if given object matches the contract schema.     |
-| is_complete   | contract          | bool          | Returns true if given object is a complete signed contract.   |
 
 
 

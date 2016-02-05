@@ -32,8 +32,121 @@ class _AbsTestIsValid(object):
         contract["extra"] = "test"
         self.assertFalse(self._is_valid(contract))
 
-    # TODO test missing properties
-    # TODO test invalid properties
+    def test_missing_properties(self):
+        keys = EXAMPLE_CONTRACT.keys()
+        keys.remove("type")  # type must be set
+        for key in keys:
+            contract = EXAMPLE_CONTRACT.copy()
+            del contract[key]
+            self.assertFalse(self._is_valid(contract))
+
+    @unittest.skip("not implemented")
+    def test_invalid_renter_id(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_renter_address(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_renter_port(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_renter_signature(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_farmer_id(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_farmer_address(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_farmer_port(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_farmer_signature(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_data_size(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_data_hash(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_store_begin(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_store_duration(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_store_end(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_audit_algorithm(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_audit_count(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_audit_merkle_root(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_heartbeat_algorithm(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_heartbeat_count(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_heartbeat_coverage(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_currency(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_amount(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_download_price(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_destination(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_source(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_begin(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_settlements(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_interval(self):
+        pass  # TODO implement
 
 
 class TestIsValidSpec(unittest.TestCase, _AbsTestIsValid):
@@ -57,9 +170,67 @@ class TestIsValid(unittest.TestCase, _AbsTestIsValid):
         self.rpc = pyjsonrpc.HttpClient(url=STORJTERMS_RPC_URL)
 
 
-# TODO test is_valid
-# TODO test sign
-# TODO test is_complete
+@unittest.skip("not implemented")
+class TestIsComplete(unittest.TestCase, _AbsTestIsValid):
+
+    def setUp(self):
+        self.rpc = pyjsonrpc.HttpClient(url=STORJTERMS_RPC_URL)
+
+    @unittest.skip("not implemented")
+    def test_complete(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_missing_fields(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_signatures(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_store_timeframe(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_audit_algorithm(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_heatbeat_algorithm(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_heatbeat_coverage(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_currency(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_destination(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_invalid_payment_source(self):
+        pass  # TODO implement
+
+
+@unittest.skip("not implemented")
+class TestSign(unittest.TestCase, _AbsTestIsValid):
+
+    @unittest.skip("not implemented")
+    def test_sign(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_sign_missing_non_signature_properties(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_sign_already_signed(self):
+        pass  # TODO implement
 
 
 if __name__ == "__main__":

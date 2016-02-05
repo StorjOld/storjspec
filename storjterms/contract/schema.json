@@ -63,6 +63,10 @@
             "type": ["integer", "null"],
             "minimum": 0
         },
+        "audit_merkle_root": {
+            "type": ["string", "null"],
+            "pattern": "^[0-9a-f]{64,64}$"
+        },
         "heartbeat_algorithm": {
             "type": ["string", "null"]
         },
@@ -120,6 +124,7 @@
         "store_end",
         "audit_algorithm",
         "audit_count",
+        "audit_merkle_root",
         "heartbeat_algorithm",
         "heartbeat_count",
         "heartbeat_coverage",

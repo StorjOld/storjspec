@@ -39,7 +39,7 @@ storj application. It consists of three main components:
 You can easily add compatibility tests to your travis build. Note you will
 have to ensure a rpc service exposing the api is running for the tests.
 
-Run storjnet compatibility tests
+#### Run storjnet compatibility tests
 
     env:
       - STORJNODE_RPC_URL="http://127.0.0.1:7000"
@@ -48,7 +48,7 @@ Run storjnet compatibility tests
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnet_compatibility.sh)"
 
 
-Run storjterms compatibility tests
+#### Run storjterms compatibility tests
 
     env:
       - STORJTERMS_RPC_URL="http://127.0.0.1:6000"
@@ -57,7 +57,7 @@ Run storjterms compatibility tests
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjterms_compatibility.sh)"
 
 
-Run storjnode compatibility tests
+#### Run storjnode compatibility tests
 
     env:
       - STORJNET_RPC_URL="http://127.0.0.1:5000"
@@ -66,7 +66,7 @@ Run storjnode compatibility tests
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnode_compatibility.sh)"
 
 
-Run all compatibility tests
+#### Run all compatibility tests
 
     env:
       - STORJNODE_RPC_URL="http://127.0.0.1:7000" STORJTERMS_RPC_URL="http://127.0.0.1:6000" STORJNET_RPC_URL="http://127.0.0.1:5000"

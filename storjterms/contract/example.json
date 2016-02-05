@@ -15,6 +15,7 @@
     "store_end": 3000000000,
     "audit_algorithm": "default",
     "audit_count": 10,
+    "audit_merkle_root": "b6ad1dda971a12cd69061ea96794fdb0923bf4eff95f76d8b2db773d21f6d33d",
     "heartbeat_algorithm": "default",
     "heartbeat_count": 3600,
     "heartbeat_coverage": 12,
