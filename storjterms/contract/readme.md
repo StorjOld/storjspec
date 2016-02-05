@@ -34,7 +34,7 @@ TODO add ipv6 and hostname validation to schema
 | farmer_signature          | string                | 65byte base64 encoded bitcoin signature                               |
 |                           |                       |                                                                       |
 | data_size                 | integer               | In bytes as a power of two (2^size).                                  |
-| data_hash                 | string                | Hex encoded sha256(sha256(data))                                      |
+| data_hash                 | string                | Hex encoded hash(data)                                                |
 |                           |                       |                                                                       |
 | store_begin               | integer               | Unixtime when the storage begins                                      |
 | store_duration            | integer               | Storage duration in seconds                                           |

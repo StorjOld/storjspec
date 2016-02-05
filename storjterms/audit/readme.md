@@ -26,7 +26,7 @@ TODO describe
 TODO describe
 
 
-Merkle leaf = sha256(sha256(challenge + shard data))
-Padded leaf = sha256("")
+Merkle leaf = hash(hash(challenge + shard data))
+Padded leaf = hash("")
 
 ![scheme](scheme.png)
