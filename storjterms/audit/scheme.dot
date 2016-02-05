@@ -1,6 +1,7 @@
 // syntax guide: http://www.graphviz.org/pdf/dotguide.pdf
-// compile png: `dot -Tpng status.dot -o status.png`
-// compile pdf: `dot -Tpdf status.dot -o status.pdf`
+// compile png: `dot -Tpng scheme.dot -o scheme.png`
+// compile pdf: `dot -Tpdf scheme.dot -o scheme.pdf`
+
 
 digraph G {
     label="
