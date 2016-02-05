@@ -51,7 +51,7 @@ class TestIsValid(unittest.TestCase, _AbsTestIsValid):
     """Test that the is_valid call from the rpc implementation is correct."""
 
     def _is_valid(self, contract):
-        return self.rpc.is_valid(contract)
+        return self.rpc.contract_is_valid(contract)
 
     def setUp(self):
         self.rpc = pyjsonrpc.HttpClient(url=STORJTERMS_RPC_URL)
