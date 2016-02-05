@@ -36,6 +36,20 @@ storj application. It consists of three main components:
 
 ### Adding compatibility tests to travis
 
-TODO implement, test and document
+    # set location rpc services (values listed are the expcted defaults)
+    export STORJNET_RPC_URL="http://127.0.0.1:5000"
+    export STORJTERMS_RPC_URL="http://127.0.0.1:6000"
+    export STORJNODE_RPC_URL="http://127.0.0.1:7000"
 
+    # test compatibility
+    source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_compatibility.sh)
+
+    # test storjnet compatibility
+    source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnet_compatibility.sh)
+
+    # test storjterms compatibility
+    source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjterms_compatibility.sh)
+
+    # test storjnode compatibility
+    source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnode_compatibility.sh)
 
