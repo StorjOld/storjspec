@@ -36,20 +36,40 @@ storj application. It consists of three main components:
 
 ### Adding compatibility tests to travis
 
-    # set location rpc services (values listed are the expcted defaults)
-    export STORJNET_RPC_URL="http://127.0.0.1:5000"
-    export STORJTERMS_RPC_URL="http://127.0.0.1:6000"
-    export STORJNODE_RPC_URL="http://127.0.0.1:7000"
+You can easily add compatibility tests to your travis build. Note you will
+have to ensure a rpc service exposing the api is running for the tests.
 
-    # test compatibility
-    source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_compatibility.sh)
+Run storjnet compatibility tests
 
-    # test storjnet compatibility
-    source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnet_compatibility.sh)
+    env:
+      - STORJNODE_RPC_URL="http://127.0.0.1:7000"
 
-    # test storjterms compatibility
-    source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjterms_compatibility.sh)
+    script:
+      - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnet_compatibility.sh)"
 
-    # test storjnode compatibility
-    source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnode_compatibility.sh)
 
+Run storjterms compatibility tests
+
+    env:
+      - STORJTERMS_RPC_URL="http://127.0.0.1:6000"
+
+    script:
+      - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjterms_compatibility.sh)"
+
+
+Run storjnode compatibility tests
+
+    env:
+      - STORJNET_RPC_URL="http://127.0.0.1:5000"
+
+    script:
+      - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnode_compatibility.sh)"
+
+
+Run all compatibility tests
+
+    env:
+      - STORJNODE_RPC_URL="http://127.0.0.1:7000" STORJTERMS_RPC_URL="http://127.0.0.1:6000" STORJNET_RPC_URL="http://127.0.0.1:5000"
+
+    script:
+      - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_compatibility.sh)"
