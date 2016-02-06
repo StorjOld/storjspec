@@ -52,6 +52,18 @@ class TestValidate(unittest.TestCase):
         self.assertTrue(self.rpc.audit_validate(PROOF, ROOT, CHALLENGE,
                                                 NUMCHALLENGES))
 
+    # TODO test invalid proofs
+
+
+@unittest.skip("not implemented")
+class TestPerform(unittest.TestCase):
+
+    def setUp(self):
+        self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
+
+    # TODO test audit_perform
+    # TODO test audit_prepare
+
 
 if __name__ == "__main__":
     unittest.main()

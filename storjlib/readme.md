@@ -10,7 +10,7 @@
 
 | Command                | Arguments                                | Returns       | Description                                                   |
 |------------------------|------------------------------------------|---------------|---------------------------------------------------------------|
-| contract_is_valid      | contract                                 | bool          | Returns true if given object matches the contract schema.     |
+| contract_validate      | contract                                 | bool          | Returns true if given object matches the contract schema.     |
 | contract_sign          | contract, key                            | contract      | Sign contract (all fields except signatures must be filled).  |
 | contract_is_complete   | contract                                 | bool          | Returns true if given object is a complete signed contract.   |
 |                        |                                          |               |                                                               |

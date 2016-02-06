@@ -17,7 +17,7 @@ EXAMPLE_CONTRACT = json.loads(open(EXAMPLE_CONTRACT_PATH, 'r').read())
 class _AbsTestIsValid(object):
 
     def test_example(self):
-        self.assertTrue(self._is_valid(EXAMPLE_CONTRACT))
+        self.assertTrue(self._validate(EXAMPLE_CONTRACT))
 
     def test_null_properties(self):
         keys = EXAMPLE_CONTRACT.keys()
@@ -25,12 +25,12 @@ class _AbsTestIsValid(object):
         for key in keys:
             contract = EXAMPLE_CONTRACT.copy()
             contract[key] = None
-            self.assertTrue(self._is_valid(contract))
+            self.assertTrue(self._validate(contract))
 
     def test_extra_properties(self):
         contract = EXAMPLE_CONTRACT.copy()
         contract["extra"] = "test"
-        self.assertFalse(self._is_valid(contract))
+        self.assertFalse(self._validate(contract))
 
     def test_missing_properties(self):
         keys = EXAMPLE_CONTRACT.keys()
@@ -38,7 +38,7 @@ class _AbsTestIsValid(object):
         for key in keys:
             contract = EXAMPLE_CONTRACT.copy()
             del contract[key]
-            self.assertFalse(self._is_valid(contract))
+            self.assertFalse(self._validate(contract))
 
     @unittest.skip("not implemented")
     def test_invalid_renter_id(self):
@@ -149,10 +149,10 @@ class _AbsTestIsValid(object):
         pass  # TODO implement
 
 
-class TestIsValidSpec(unittest.TestCase, _AbsTestIsValid):
+class TestSpecSchema(unittest.TestCase, _AbsTestIsValid):
     """Test that the provided json schema from storjspec is correct."""
 
-    def _is_valid(self, contract):
+    def _validate(self, contract):
         try:
             jsonschema.validate(contract, CONTRACT_SCHEMA)
             return True
@@ -160,11 +160,11 @@ class TestIsValidSpec(unittest.TestCase, _AbsTestIsValid):
             return False
 
 
-class TestIsValid(unittest.TestCase, _AbsTestIsValid):
-    """Test that the is_valid call from the rpc implementation is correct."""
+class TestValidate(unittest.TestCase, _AbsTestIsValid):
+    """Test that the validate call from the rpc implementation is correct."""
 
-    def _is_valid(self, contract):
-        return self.rpc.contract_is_valid(contract)
+    def _validate(self, contract):
+        return self.rpc.contract_validate(contract)
 
     def setUp(self):
         self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
