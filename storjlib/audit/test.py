@@ -2,19 +2,22 @@ import os
 import unittest
 import hashlib
 import pyjsonrpc
+import binascii
 
 
 DEFAULT_RPC_URL = "http://127.0.0.1:7000"
 STORJLIB_RPC_URL = os.environ.get("STORJLIB_RPC_URL", DEFAULT_RPC_URL)
 
 
-def h(data):
-    return hashlib.new("ripemd160", hashlib.sha256(data).digest()).digest()
+def h(hexdata):
+    data = binascii.unhexlify(hexdata)
+    digest = hashlib.new("ripemd160", hashlib.sha256(data).digest()).digest()
+    return binascii.hexlify(digest)
 
 
 NUMCHALLENGES = 5
-SHARDDATA = b"monkey butt"
-CHALLANGES = [os.urandom(32) for n in range(NUMCHALLENGES)]
+SHARDDATA = binascii.hexlify(os.urandom(1024))
+CHALLANGES = [binascii.hexlify(os.urandom(32)) for n in range(NUMCHALLENGES)]
 R0 = h(CHALLANGES[0] + SHARDDATA)
 R1 = h(CHALLANGES[1] + SHARDDATA)
 R2 = h(CHALLANGES[2] + SHARDDATA)
@@ -42,7 +45,6 @@ class TestPerform(unittest.TestCase):
     pass
 
 
-@unittest.skip("not implemented")
 class TestValidate(unittest.TestCase):
 
     def setUp(self):
@@ -53,16 +55,6 @@ class TestValidate(unittest.TestCase):
                                                 NUMCHALLENGES))
 
     # TODO test invalid proofs
-
-
-@unittest.skip("not implemented")
-class TestPerform(unittest.TestCase):
-
-    def setUp(self):
-        self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
-
-    # TODO test audit_perform
-    # TODO test audit_prepare
 
 
 if __name__ == "__main__":
