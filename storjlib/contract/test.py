@@ -6,7 +6,7 @@ import pyjsonrpc
 
 
 DEFAULT_RPC_URL = "http://127.0.0.1:7000"
-STORJTERMS_RPC_URL = os.environ.get("STORJTERMS_RPC_URL", DEFAULT_RPC_URL)
+STORJLIB_RPC_URL = os.environ.get("STORJLIB_RPC_URL", DEFAULT_RPC_URL)
 CONTRACT_DIR = os.path.dirname(os.path.abspath(__file__))
 CONTRACT_SCHEMA_PATH = os.path.join(CONTRACT_DIR, "schema.json")
 CONTRACT_SCHEMA = json.loads(open(CONTRACT_SCHEMA_PATH, 'r').read())
@@ -167,14 +167,14 @@ class TestIsValid(unittest.TestCase, _AbsTestIsValid):
         return self.rpc.contract_is_valid(contract)
 
     def setUp(self):
-        self.rpc = pyjsonrpc.HttpClient(url=STORJTERMS_RPC_URL)
+        self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
 
 
 @unittest.skip("not implemented")
 class TestIsComplete(unittest.TestCase, _AbsTestIsValid):
 
     def setUp(self):
-        self.rpc = pyjsonrpc.HttpClient(url=STORJTERMS_RPC_URL)
+        self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
 
     @unittest.skip("not implemented")
     def test_complete(self):

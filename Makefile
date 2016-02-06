@@ -15,8 +15,7 @@ help:
 	@echo "COMMANDS:"
 	@echo "  test               Run all tests."
 	@echo "  test_storjnet      Run storjnet tests."
-	@echo "  test_storjnode     Run storjnode tests."
-	@echo "  test_storjterms    Run storjterms tests."
+	@echo "  test_storjlib      Run storjlib tests."
 	@echo "  graphs             Compile graphviz graphs for documentation."
 	@echo "  clean              Remove all generated files."
 	@echo "  setup              Setup development environment."
@@ -52,17 +51,13 @@ test_storjnet: setup
 	# TODO test_storjnet
 
 
-test_storjnode: setup
-	# TODO test_storjnode
+test_storjlib: setup
+	$(PY) storjlib/contract/test.py --verbose
 
 
-test_storjterms: setup
-	$(PY) storjterms/contract/test.py --verbose
-
-
-test: test_storjnet test_storjnode test_storjterms
+test: test_storjnet test_storjlib
 
 
 graphs:
 	dot -Tpng status.dot -o status.png
-	dot -Tpng storjterms/audit/scheme.dot -o storjterms/audit/scheme.png
+	dot -Tpng storjlib/audit/scheme.dot -o storjlib/audit/scheme.png

@@ -5,9 +5,8 @@ storj application. It consists of three main components:
 
  * [storjnet](storjnet): Responsible node networking and communication.
 
- * [storjterms](storjterms): Responsible for storage contracts, auditing and heartbeat terms.
+ * [storjlib](storjlib): Responsible for storage contracts, auditing and heartbeat terms.
 
- * [storjnode](storjnode): Reference client that is not part of the protocol, but included as defines useful components required by most implementations.
 
 ### Dependency graph and progress status
 
@@ -18,8 +17,7 @@ storj application. It consists of three main components:
 
     # set location rpc services (values listed are the expcted defaults)
     export STORJNET_RPC_URL="http://127.0.0.1:5000"
-    export STORJNODE_RPC_URL="http://127.0.0.1:6000"
-    export STORJTERMS_RPC_URL="http://127.0.0.1:7000"
+    export STORJLIB_RPC_URL="http://127.0.0.1:7000"
 
     # run all tests
     make test
@@ -27,11 +25,8 @@ storj application. It consists of three main components:
     # only run storjnet tests
     make test_storjnet
 
-    # only run storjnode tests
-    make test_storjnode
-
-    # only run storjterms tests
-    make test_storjterms
+    # only run storjlib tests
+    make test_storjlib
 
 
 ### Adding compatibility tests to travis
@@ -42,34 +37,25 @@ have to ensure a rpc service exposing the api is running for the tests.
 #### Run storjnet compatibility tests
 
     env:
-      - STORJNODE_RPC_URL="http://127.0.0.1:7000"
+      - STORJNET_RPC_URL="http://127.0.0.1:7000"
 
     script:
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnet_compatibility.sh)"
 
 
-#### Run storjterms compatibility tests
+#### Run storjlib compatibility tests
 
     env:
-      - STORJTERMS_RPC_URL="http://127.0.0.1:6000"
+      - STORJLIB_RPC_URL="http://127.0.0.1:6000"
 
     script:
-      - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjterms_compatibility.sh)"
-
-
-#### Run storjnode compatibility tests
-
-    env:
-      - STORJNET_RPC_URL="http://127.0.0.1:5000"
-
-    script:
-      - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnode_compatibility.sh)"
+      - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjlib_compatibility.sh)"
 
 
 #### Run all compatibility tests
 
     env:
-      - STORJNODE_RPC_URL="http://127.0.0.1:7000" STORJTERMS_RPC_URL="http://127.0.0.1:6000" STORJNET_RPC_URL="http://127.0.0.1:5000"
+      - STORJLIB_RPC_URL="http://127.0.0.1:6000" STORJNET_RPC_URL="http://127.0.0.1:5000"
 
     script:
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_compatibility.sh)"

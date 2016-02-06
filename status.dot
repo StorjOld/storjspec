@@ -46,22 +46,33 @@ digraph G {
     "E2EE" -> "Transport";
     "Bandwidth limiter" -> "Database";
 
-    // STORJTERMS
+    // STORJLIB
     subgraph cluster_2 {
-        label = "Storjterms";
+        label = "Storjlib";
         style=filled;
         color=lightgoldenrod;
 
-        "Contract" [shape=hexagon]; // terms of a storage contract between peers
+        "Contract" [fillcolor=orange, shape=hexagon]; // terms of a storage contract between peers
         "Audit" [fillcolor=orange, shape=hexagon]; // track state of a contract over time
+        "Store" [fillcolor=orange, shape=hexagon];
         "Heartbeat";
+        "Ledger (SIP 001)" [shape=hexagon];
+        "Graylist (SIP 004)";
+        "CHISQRDTEST (SIP 003)";
     };
     "Audit" -> "Contract"; // when/how to perform the audit
-    "Audit" -> "Store manager"; // perform audit challange
+    "Audit" -> "Store"; // perform audit challange
     "Audit" -> "Ledger (SIP 001)"; // save result in ledger
     "Heartbeat" -> "Contract";
-    "Heartbeat" -> "Store manager"; // perform heartbeat challange
+    "Heartbeat" -> "Store"; // perform heartbeat challange
     "Heartbeat" -> "Ledger (SIP 001)"; // save result in ledger
+    "Store" -> "File system";
+    "Store" -> "Graylist (SIP 004)";
+    "Store" -> "Database";
+    "Ledger (SIP 001)" -> "Blockchain";
+    "Graylist (SIP 004)" -> "CHISQRDTEST (SIP 003)";
+    "CHISQRDTEST (SIP 003)" -> "Data streams";
+    "CHISQRDTEST (SIP 003)" -> "REST (SIP 002)";
 
     // STORJNODE
     subgraph cluster_3 {
@@ -70,21 +81,11 @@ digraph G {
         color=lightseagreen;
 
         "Roy"; // for sending/receiving of funds for services used 
-        "Store manager" [fillcolor=orange, shape=hexagon];
         "Wallet" [fillcolor=orange, shape=hexagon];
         "Contract manager"; // Store contracts
-        "CHISQRDTEST (SIP 003)";
-        "Graylist (SIP 004)";
-        "Ledger (SIP 001)" [fillcolor=orange, shape=hexagon];
     };
     "Roy" -> "Contract manager";
     "Contract manager" -> "Database";
-    "Store manager" -> "File system";
-    "Store manager" -> "Graylist (SIP 004)";
-    "Store manager" -> "Database";
-    "Graylist (SIP 004)" -> "CHISQRDTEST (SIP 003)";
-    "CHISQRDTEST (SIP 003)" -> "Data streams";
-    "CHISQRDTEST (SIP 003)" -> "REST (SIP 002)";
     "Wallet" -> "Blockchain";
     "Roy" -> "Messaging";
     "Roy" -> "Audit"; // perform audits
@@ -93,8 +94,7 @@ digraph G {
     "Roy" -> "Ledger (SIP 001)"; // verify service was used/provided
     "Roy" -> "Wallet"; // transfer funds
     "Roy" -> "Pub/Sub"; // ask/bid on contracts
-    "Roy" -> "Store manager";
-    "Ledger (SIP 001)" -> "Blockchain";
+    "Roy" -> "Store";
 
     // EXTERNAL
     "File system" [fillcolor=green, shape=ellipse];
