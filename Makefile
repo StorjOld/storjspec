@@ -53,6 +53,7 @@ test_storjnet: setup
 
 test_storjlib: setup
 	$(PY) storjlib/contract/test.py --verbose
+	$(PY) storjlib/audit/test.py --verbose
 
 
 test: test_storjnet test_storjlib

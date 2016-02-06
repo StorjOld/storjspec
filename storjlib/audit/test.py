@@ -9,7 +9,7 @@ STORJLIB_RPC_URL = os.environ.get("STORJLIB_RPC_URL", DEFAULT_RPC_URL)
 
 
 def h(data):
-    return hashlib.new("ripemd160", hashlib.sha256(data).digest())
+    return hashlib.new("ripemd160", hashlib.sha256(data).digest()).digest()
 
 
 NUMCHALLENGES = 5
@@ -42,6 +42,7 @@ class TestPerform(unittest.TestCase):
     pass
 
 
+@unittest.skip("not implemented")
 class TestValidate(unittest.TestCase):
 
     def setUp(self):
