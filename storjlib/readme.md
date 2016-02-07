@@ -16,7 +16,7 @@
 |                        |                                          |               |                                                               |
 | audit_prepare          | shardid, challenges                      | leaves        | TODO add documentation                                        |
 | audit_perform          | shardid, leaves, challenge               | proof         | Proof format: [[node, [leaf, [response]]], node]              |
-| audit_validate         | proof, root, challenge, numchallenges    | bool          | TODO add documentation                                        |
+| audit_validate         | proof, root, challengenum, leaves        | bool          | TODO add documentation                                        |
 
 
 ## Global hash function
