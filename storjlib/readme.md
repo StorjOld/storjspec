@@ -18,9 +18,10 @@
 | audit_perform          | shardid, leaves, challenge               | proof         | Proof format: [[node, [leaf, [response]]], node]              |
 | audit_validate         | proof, root, challengenum, leaves        | bool          | TODO add documentation                                        |
 |                        |                                          |               |                                                               |
-| store_import           | paths                                    | shardid       | Import files/folders.                                         |
-| store_export           | shardid, path                            | paths         | Export a shard.                                               |
+| store_import           | paths                                    | shardid       | Import files/folders (behaves similar to zip).                |
+| store_export           | shardid, path                            | paths         | Export a shard (behaves similar to unzip).                    |
 | store_add              | path                                     | shardid       | Add an existing shard into the store.                         |
+| store_remove           | shardid                                  |               | Remove a shard from the store.                                |
 
 
 ## Global hash function

@@ -1,4 +1,5 @@
 import os
+import tempfile
 import unittest
 import hashlib
 import pyjsonrpc
@@ -16,13 +17,14 @@ def h(hexdata):
 
 
 NUMCHALLENGES = 5
-SHARDDATA = binascii.hexlify(os.urandom(1024))
+SHARD_DATA = os.urandom(1024)  # 1M
+SHARD_HEXDATA = binascii.hexlify(SHARD_DATA)
 CHALLENGES = [binascii.hexlify(os.urandom(32)) for n in range(NUMCHALLENGES)]
-R0 = h(CHALLENGES[0] + SHARDDATA)
-R1 = h(CHALLENGES[1] + SHARDDATA)
-R2 = h(CHALLENGES[2] + SHARDDATA)
-R3 = h(CHALLENGES[3] + SHARDDATA)
-R4 = h(CHALLENGES[4] + SHARDDATA)
+R0 = h(CHALLENGES[0] + SHARD_HEXDATA)
+R1 = h(CHALLENGES[1] + SHARD_HEXDATA)
+R2 = h(CHALLENGES[2] + SHARD_HEXDATA)
+R3 = h(CHALLENGES[3] + SHARD_HEXDATA)
+R4 = h(CHALLENGES[4] + SHARD_HEXDATA)
 R5 = h("")
 R6 = h("")
 R7 = h("")
@@ -40,9 +42,27 @@ class TestPrepare(unittest.TestCase):
     pass
 
 
-@unittest.skip("not implemented")
 class TestPerform(unittest.TestCase):
-    pass
+
+    def setUp(self):
+        self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
+
+        # save temp shard
+        shard_path = tempfile.mktemp()
+        with open(shard_path, "wb") as shard:
+            shard.write(SHARD_DATA)
+
+        self.shardid = self.rpc.store_add(shard_path)  # import shard
+        os.remove(shard_path)  # remove temp shard
+
+    def tearDown(self):
+        self.rpc.store_remove(self.shardid)  # remove temp shard from store
+
+    def test_preform(self):
+        proof = self.rpc.audit_perform(self.shardid, LEAVES, CHALLENGE)
+        self.assertEqual(proof, PROOF)
+
+    # TODO test invalid input
 
 
 class TestValidate(unittest.TestCase):
@@ -53,7 +73,24 @@ class TestValidate(unittest.TestCase):
     def test_validate(self):
         self.assertTrue(self.rpc.audit_validate(PROOF, ROOT, 3, LEAVES))
 
-    # TODO test invalid proofs
+    @unittest.skip("not implemented")
+    def test_invalid_challange_response(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_proof_to_shallow(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_proof_for_wrong_leaf(self):
+        pass  # TODO implement
+
+    @unittest.skip("not implemented")
+    def test_proof_for_wrong_root(self):
+        pass  # TODO implement
+
+    # TODO other possible invalid proofs?
+    # TODO test invalid input formats
 
 
 if __name__ == "__main__":
