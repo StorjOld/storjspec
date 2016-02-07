@@ -37,7 +37,7 @@ have to ensure a rpc service exposing the api is running for the tests.
 #### Run storjnet compatibility tests
 
     env:
-      - STORJNET_RPC_URL="http://127.0.0.1:7000"
+      - STORJNET_RPC_URL="http://127.0.0.1:5000"
 
     script:
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnet_compatibility.sh)"
@@ -46,7 +46,7 @@ have to ensure a rpc service exposing the api is running for the tests.
 #### Run storjlib compatibility tests
 
     env:
-      - STORJLIB_RPC_URL="http://127.0.0.1:6000"
+      - STORJLIB_RPC_URL="http://127.0.0.1:7000"
 
     script:
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjlib_compatibility.sh)"
@@ -55,7 +55,7 @@ have to ensure a rpc service exposing the api is running for the tests.
 #### Run all compatibility tests
 
     env:
-      - STORJLIB_RPC_URL="http://127.0.0.1:6000" STORJNET_RPC_URL="http://127.0.0.1:5000"
+      - STORJLIB_RPC_URL="http://127.0.0.1:7000" STORJNET_RPC_URL="http://127.0.0.1:5000"
 
     script:
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_compatibility.sh)"

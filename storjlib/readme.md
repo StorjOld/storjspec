@@ -17,6 +17,10 @@
 | audit_prepare          | shardid, challenges                      | leaves        | TODO add documentation                                        |
 | audit_perform          | shardid, leaves, challenge               | proof         | Proof format: [[node, [leaf, [response]]], node]              |
 | audit_validate         | proof, root, challengenum, leaves        | bool          | TODO add documentation                                        |
+|                        |                                          |               |                                                               |
+| store_import           | paths                                    | shardid       | Import files/folders.                                         |
+| store_export           | shardid, path                            | paths         | Export a shard.                                               |
+| store_add              | path                                     | shardid       | Add an existing shard into the store.                         |
 
 
 ## Global hash function
