@@ -51,11 +51,19 @@ test_storjnet: setup
 	# TODO test_storjnet
 
 
-test_storjlib: setup
+test_storjlib_store: setup
+	# TODO test_storjlib_store
+
+
+test_storjlib_contract: setup
 	$(PY) storjlib/contract/test.py --verbose
+
+
+test_storjlib_audit: setup
 	$(PY) storjlib/audit/test.py --verbose
 
 
+test_storjlib: test_storjlib_contract test_storjlib_audit test_storjlib_store
 test: test_storjnet test_storjlib
 
 

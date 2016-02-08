@@ -1,6 +1,7 @@
 # Storj network protocol layer
 
-[Python reference implimentation](https://github.com/storj/storjnet)
+[Python reference implementation](https://github.com/storj/storjnet)
+[node.js reference implementation](https://github.com/Storj/node-storj)
 
 
 ## User API Calls
