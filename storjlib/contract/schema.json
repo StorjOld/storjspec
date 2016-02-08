@@ -6,7 +6,7 @@
         },
         "renter_id": {
             "type": ["string", "null"],
-            "pattern": "^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$"
+            "pattern": "^[0-9a-f]{40,40}"
         },
         "renter_address": {
             "type": ["string", "null"],
@@ -22,7 +22,7 @@
         },
         "farmer_id": {
             "type": ["string", "null"],
-            "pattern": "^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$"
+            "pattern": "^[0-9a-f]{40,40}"
         },
         "farmer_address": {
             "type": ["string", "null"],
