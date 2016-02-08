@@ -19,15 +19,16 @@ def h(hexdata):
 NUMCHALLENGES = 5
 SHARD_DATA = os.urandom(1024)  # 1M
 SHARD_HEXDATA = binascii.hexlify(SHARD_DATA)
+SHARD_ID = h(SHARD_HEXDATA)
 CHALLENGES = [binascii.hexlify(os.urandom(32)) for n in range(NUMCHALLENGES)]
 R0 = h(CHALLENGES[0] + SHARD_HEXDATA)
 R1 = h(CHALLENGES[1] + SHARD_HEXDATA)
 R2 = h(CHALLENGES[2] + SHARD_HEXDATA)
 R3 = h(CHALLENGES[3] + SHARD_HEXDATA)
 R4 = h(CHALLENGES[4] + SHARD_HEXDATA)
-R5 = h("")
-R6 = h("")
-R7 = h("")
+R5 = ""
+R6 = ""
+R7 = ""
 LEAVES = [h(R0), h(R1), h(R2), h(R3), h(R4), h(R5), h(R6), h(R7)]
 L0, L1, L2, L3, L4, L5, L6, L7 = LEAVES
 ROOT = h(h(h(L0 + L1) + h(L2 + L3)) + h(h(L4 + L5) + h(L6 + L7)))
@@ -59,7 +60,8 @@ class TestPerform(unittest.TestCase):
         self.rpc.store_remove(self.shardid)  # remove temp shard from store
 
     def test_preform(self):
-        proof = self.rpc.audit_perform(self.shardid, LEAVES, CHALLENGE)
+        self.assertEqual(self.shardid, SHARD_ID)
+        proof = self.rpc.audit_perform(SHARD_ID, LEAVES, CHALLENGE)
         self.assertEqual(proof, PROOF)
 
     # TODO test invalid input
