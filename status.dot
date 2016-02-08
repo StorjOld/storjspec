@@ -53,7 +53,7 @@ digraph G {
         color=lightgoldenrod;
 
         "Contract" [fillcolor=orange, shape=hexagon]; // terms of a storage contract between peers
-        "Audit" [fillcolor=green, shape=ellipse]; // track state of a contract over time
+        "Audit" [fillcolor=yellow, shape=ellipse]; // track state of a contract over time
         "Store" [fillcolor=orange, shape=hexagon];
         "Heartbeat";
         "Ledger (SIP 001)" [shape=hexagon];
