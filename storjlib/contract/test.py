@@ -1,8 +1,11 @@
 import os
+import binascii
 import json
 import unittest
+import btctxstore
 import jsonschema
 import pyjsonrpc
+from pycoin.encoding import a2b_hashed_base58
 
 
 DEFAULT_RPC_URL = "http://127.0.0.1:7000"
@@ -12,6 +15,10 @@ CONTRACT_SCHEMA_PATH = os.path.join(CONTRACT_DIR, "schema.json")
 CONTRACT_SCHEMA = json.loads(open(CONTRACT_SCHEMA_PATH, 'r').read())
 EXAMPLE_CONTRACT_PATH = os.path.join(CONTRACT_DIR, "example.json")
 EXAMPLE_CONTRACT = json.loads(open(EXAMPLE_CONTRACT_PATH, 'r').read())
+
+
+def btcaddress_to_hexnodeid(address):
+    return binascii.hexlify(a2b_hashed_base58(address)[1:])
 
 
 class _AbsTestIsValid(object):
@@ -171,7 +178,7 @@ class TestValidate(unittest.TestCase, _AbsTestIsValid):
 
 
 @unittest.skip("not implemented")
-class TestIsComplete(unittest.TestCase, _AbsTestIsValid):
+class TestIsComplete(unittest.TestCase):
 
     def setUp(self):
         self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
@@ -217,12 +224,26 @@ class TestIsComplete(unittest.TestCase, _AbsTestIsValid):
         pass  # TODO implement
 
 
-@unittest.skip("not implemented")
-class TestSign(unittest.TestCase, _AbsTestIsValid):
+class TestSign(unittest.TestCase):
 
-    @unittest.skip("not implemented")
+    def setUp(self):
+        self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
+        self.btctxstore = btctxstore.BtcTxStore()
+        self.alice_key = self.btctxstore.create_wallet()
+        self.bob_key = self.btctxstore.create_key()
+        alice_wif = self.btctxstore.get_key(self.alice_key)
+        alice_btcaddr = self.btctxstore.get_address(alice_wif)
+        bob_btcaddr = self.btctxstore.get_address(self.bob_key)
+        self.aliceid = btcaddress_to_hexnodeid(alice_btcaddr)
+        self.bobid = btcaddress_to_hexnodeid(bob_btcaddr)
+
     def test_sign(self):
-        pass  # TODO implement
+        contract = EXAMPLE_CONTRACT.copy()
+        contract["farmer_id"] = self.aliceid
+        contract["renter_id"] = self.bobid
+        contract = self.rpc.contract_sign(contract, self.alice_key)
+        contract = self.rpc.contract_sign(contract, self.bob_key)
+        self.assertTrue(self.rpc.contract_is_complete(contract))
 
     @unittest.skip("not implemented")
     def test_sign_missing_non_signature_properties(self):
