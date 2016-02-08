@@ -1,4 +1,5 @@
 import os
+import copy
 import tempfile
 import unittest
 import hashlib
@@ -43,7 +44,7 @@ class TestPrepare(unittest.TestCase):
     pass
 
 
-class TestPerform(unittest.TestCase):
+class _Abs(object):
 
     def setUp(self):
         self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
@@ -59,6 +60,9 @@ class TestPerform(unittest.TestCase):
     def tearDown(self):
         self.rpc.store_remove(self.shardid)  # remove temp shard from store
 
+
+class TestPerform(_Abs, unittest.TestCase):
+
     def test_preform(self):
         self.assertEqual(self.shardid, SHARD_ID)
         proof = self.rpc.audit_perform(SHARD_ID, LEAVES, CHALLENGE)
@@ -67,29 +71,33 @@ class TestPerform(unittest.TestCase):
     # TODO test invalid input
 
 
-class TestValidate(unittest.TestCase):
-
-    def setUp(self):
-        self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
+class TestValidate(_Abs, unittest.TestCase):
 
     def test_validate(self):
         self.assertTrue(self.rpc.audit_validate(PROOF, ROOT, 3, LEAVES))
 
     @unittest.skip("not implemented")
     def test_invalid_challange_response(self):
-        pass  # TODO implement
+        # attacker provides proof with the wrong response hoping its not checked
+        # does not match any leaf
+        proof = copy.deepcopy(PROOF)
+        proof[0][1][1] = h("DEADBEEF")
+        self.assertFalse(self.rpc.audit_validate(proof, ROOT, 3, LEAVES))
 
-    @unittest.skip("not implemented")
     def test_proof_to_shallow(self):
-        pass  # TODO implement
+        # attacker provides a shallow proof hoping the depth is not checked
+        self.assertFalse(self.rpc.audit_validate(PROOF, ROOT, 4, LEAVES))
 
-    @unittest.skip("not implemented")
     def test_proof_for_wrong_leaf(self):
-        pass  # TODO implement
+        # attacker provides proof for an old challenge hoping its not checked
+        # match wrong leaf
+        proof = self.rpc.audit_perform(SHARD_ID, LEAVES, CHALLENGES[2])
+        self.assertFalse(self.rpc.audit_validate(proof, ROOT, 3, LEAVES))
 
-    @unittest.skip("not implemented")
     def test_proof_for_wrong_root(self):
-        pass  # TODO implement
+        # attacker provides proof for wrong merkle root hoping its not checked
+        root = h("DEADBEEF")
+        self.assertFalse(self.rpc.audit_validate(PROOF, root, 3, LEAVES))
 
     # TODO other possible invalid proofs?
     # TODO test invalid input formats
