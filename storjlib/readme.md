@@ -16,9 +16,9 @@
 | contract_sign          | contract, key                            | contract      | Sign contract (all fields except signatures must be filled).  |
 | contract_is_complete   | contract                                 | bool          | Returns true if given object is a complete signed contract.   |
 |                        |                                          |               |                                                               |
-| audit_prepare          | shardid, challenges                      | leaves        | TODO add documentation                                        |
+| audit_prepare          | shardid, challenges                      | leaves        | Create the corresponding leaves for the given challenges.     |
 | audit_perform          | shardid, leaves, challenge               | proof         | Proof format: [[node, [leaf, [response]]], node]              |
-| audit_validate         | proof, root, challengenum, leaves        | bool          | TODO add documentation                                        |
+| audit_validate         | proof, root, challengenum, leaves        | bool          | Validate that the given proof is correct.                     |
 |                        |                                          |               |                                                               |
 | store_import           | paths                                    | shardid       | Import files/folders (behaves similar to zip).                |
 | store_export           | shardid, path                            | paths         | Export a shard (behaves similar to unzip).                    |

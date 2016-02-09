@@ -40,7 +40,7 @@ N4567 = h(h(L4 + L5) + h(L6 + L7))
 PROOF = [[N01, [L2, [R3]]], N4567]
 
 
-class _Abs(object):
+class _AbsAudit(object):
 
     def setUp(self):
         self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
@@ -57,7 +57,7 @@ class _Abs(object):
         self.rpc.store_remove(self.shardid)  # remove temp shard from store
 
 
-class TestPrepare(_Abs, unittest.TestCase):
+class TestAuditPrepare(_AbsAudit, unittest.TestCase):
 
     def test_prepare(self):
         self.assertEqual(self.shardid, SHARD_ID)
@@ -65,7 +65,7 @@ class TestPrepare(_Abs, unittest.TestCase):
         self.assertEqual(leaves, LEAVES)
 
 
-class TestPerform(_Abs, unittest.TestCase):
+class TestAuditPerform(_AbsAudit, unittest.TestCase):
 
     def test_preform(self):
         self.assertEqual(self.shardid, SHARD_ID)
@@ -75,7 +75,7 @@ class TestPerform(_Abs, unittest.TestCase):
     # TODO test invalid input
 
 
-class TestValidate(_Abs, unittest.TestCase):
+class TestAuditValidate(_AbsAudit, unittest.TestCase):
 
     def test_validate(self):
         self.assertTrue(self.rpc.audit_validate(PROOF, ROOT, 3, LEAVES))

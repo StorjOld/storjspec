@@ -21,7 +21,7 @@ def btcaddress_to_hexnodeid(address):
     return binascii.hexlify(a2b_hashed_base58(address)[1:])
 
 
-class _AbsTestIsValid(object):
+class _AbsContractTestIsValid(object):
 
     def test_example(self):
         self.assertTrue(self._validate(EXAMPLE_CONTRACT))
@@ -156,7 +156,7 @@ class _AbsTestIsValid(object):
         pass  # TODO implement
 
 
-class TestSpecSchema(unittest.TestCase, _AbsTestIsValid):
+class TestContractSpecSchema(unittest.TestCase, _AbsContractTestIsValid):
     """Test that the provided json schema from storjspec is correct."""
 
     def _validate(self, contract):
@@ -167,7 +167,7 @@ class TestSpecSchema(unittest.TestCase, _AbsTestIsValid):
             return False
 
 
-class TestValidate(unittest.TestCase, _AbsTestIsValid):
+class TestContractValidate(unittest.TestCase, _AbsContractTestIsValid):
     """Test that the validate call from the rpc implementation is correct."""
 
     def _validate(self, contract):
@@ -178,7 +178,7 @@ class TestValidate(unittest.TestCase, _AbsTestIsValid):
 
 
 @unittest.skip("not implemented")
-class TestIsComplete(unittest.TestCase):
+class TestContractIsComplete(unittest.TestCase):
 
     def setUp(self):
         self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
@@ -224,7 +224,7 @@ class TestIsComplete(unittest.TestCase):
         pass  # TODO implement
 
 
-class TestSign(unittest.TestCase):
+class TestContractSign(unittest.TestCase):
 
     def setUp(self):
         self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
@@ -245,13 +245,37 @@ class TestSign(unittest.TestCase):
         contract = self.rpc.contract_sign(contract, self.bob_key)
         self.assertTrue(self.rpc.contract_is_complete(contract))
 
-    @unittest.skip("not implemented")
     def test_sign_missing_non_signature_properties(self):
-        pass  # TODO implement
+        def callback():
+            contract = EXAMPLE_CONTRACT.copy()
+            contract["farmer_id"] = self.aliceid
+            self.rpc.contract_sign(contract, self.alice_key)
+        self.assertRaises(pyjsonrpc.rpcerror.JsonRpcError, callback)
 
-    @unittest.skip("not implemented")
     def test_sign_already_signed(self):
-        pass  # TODO implement
+        def callback():
+            contract = EXAMPLE_CONTRACT.copy()
+            contract["farmer_id"] = self.aliceid
+            contract["renter_id"] = self.bobid
+            contract = self.rpc.contract_sign(contract, self.alice_key)
+            self.rpc.contract_sign(contract, self.alice_key)
+        self.assertRaises(pyjsonrpc.rpcerror.JsonRpcError, callback)
+
+    def test_invalid_key(self):
+        def callback():
+            contract = EXAMPLE_CONTRACT.copy()
+            contract["farmer_id"] = self.aliceid
+            contract["renter_id"] = self.bobid
+            self.rpc.contract_sign(contract, "badkey")
+        self.assertRaises(pyjsonrpc.rpcerror.JsonRpcError, callback)
+
+    def test_incorrect_key(self):
+        def callback():
+            contract = EXAMPLE_CONTRACT.copy()
+            contract["farmer_id"] = self.aliceid
+            contract["renter_id"] = self.bobid
+            self.rpc.contract_sign(contract, self.btctxstore.create_key())
+        self.assertRaises(pyjsonrpc.rpcerror.JsonRpcError, callback)
 
 
 if __name__ == "__main__":
