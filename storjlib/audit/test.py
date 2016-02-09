@@ -30,18 +30,14 @@ R4 = h(CHALLENGES[4] + SHARD_HEXDATA)
 R5 = ""
 R6 = ""
 R7 = ""
-LEAVES = [h(R0), h(R1), h(R2), h(R3), h(R4), h(R5), h(R6), h(R7)]
-L0, L1, L2, L3, L4, L5, L6, L7 = LEAVES
+LEAVES = [h(R0), h(R1), h(R2), h(R3), h(R4)]
+ALL_LEAVES = [h(R0), h(R1), h(R2), h(R3), h(R4), h(R5), h(R6), h(R7)]
+L0, L1, L2, L3, L4, L5, L6, L7 = ALL_LEAVES
 ROOT = h(h(h(L0 + L1) + h(L2 + L3)) + h(h(L4 + L5) + h(L6 + L7)))
 CHALLENGE = CHALLENGES[3]
 N01 = h(L0 + L1)
 N4567 = h(h(L4 + L5) + h(L6 + L7))
 PROOF = [[N01, [L2, [R3]]], N4567]
-
-
-@unittest.skip("not implemented")
-class TestPrepare(unittest.TestCase):
-    pass
 
 
 class _Abs(object):
@@ -59,6 +55,14 @@ class _Abs(object):
 
     def tearDown(self):
         self.rpc.store_remove(self.shardid)  # remove temp shard from store
+
+
+class TestPrepare(_Abs, unittest.TestCase):
+
+    def test_prepare(self):
+        self.assertEqual(self.shardid, SHARD_ID)
+        leaves = self.rpc.audit_prepare(SHARD_ID, CHALLENGES)
+        self.assertEqual(leaves, LEAVES)
 
 
 class TestPerform(_Abs, unittest.TestCase):
