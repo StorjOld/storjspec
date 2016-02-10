@@ -1,12 +1,12 @@
-# Storage audit
+# Storage audit and heartbeats
 
 The farmer provides proof of storage by hashing a given challenge with the
-shard data. The correctness of the audit response can be verified via
+shard data. The correctness of the audit/heartbeat response can be verified via
 a Merkle tree, which is given by the renter on shard transfer and the root
 stored in the contract. 
 
 
-## Generating audit challenges
+## Generating audit/heartbeat challenges
 
 TODO describe
 
@@ -16,17 +16,17 @@ TODO describe
 TODO describe
 
 
-## Preforming the audit response
+## Preforming the audit/heartbeat response
 
 TODO describe
 
 
-## Verification of the audit with the Merkle tree
+## Verification of the audit/heartbeat with the Merkle tree
 
 TODO describe
 
 
-Merkle leaf = hash(hash(challenge + shard data))
+Merkle leaf = hash(hash(challenge + data))
 Padded leaf = hash("")
 
 ![scheme](scheme.png)

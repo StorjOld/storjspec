@@ -177,19 +177,40 @@ class TestContractValidate(unittest.TestCase, _AbsContractTestIsValid):
         self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
 
 
-@unittest.skip("not implemented")
 class TestContractIsComplete(unittest.TestCase):
 
     def setUp(self):
         self.rpc = pyjsonrpc.HttpClient(url=STORJLIB_RPC_URL)
+        self.btctxstore = btctxstore.BtcTxStore()
+        self.alice_key = self.btctxstore.create_wallet()
+        self.bob_key = self.btctxstore.create_key()
+        alice_wif = self.btctxstore.get_key(self.alice_key)
+        alice_btcaddr = self.btctxstore.get_address(alice_wif)
+        bob_btcaddr = self.btctxstore.get_address(self.bob_key)
+        self.aliceid = btcaddress_to_hexnodeid(alice_btcaddr)
+        self.bobid = btcaddress_to_hexnodeid(bob_btcaddr)
 
-    @unittest.skip("not implemented")
     def test_complete(self):
-        pass  # TODO implement
+        contract = EXAMPLE_CONTRACT.copy()
+        self.assertFalse(self.rpc.contract_is_complete(contract))
+        contract["farmer_id"] = self.aliceid
+        contract["renter_id"] = self.bobid
+        self.assertFalse(self.rpc.contract_is_complete(contract))
+        contract = self.rpc.contract_sign(contract, self.alice_key)
+        contract = self.rpc.contract_sign(contract, self.bob_key)
+        self.assertTrue(self.rpc.contract_is_complete(contract))
 
-    @unittest.skip("not implemented")
     def test_missing_fields(self):
-        pass  # TODO implement
+        contract = EXAMPLE_CONTRACT.copy()
+        contract["farmer_id"] = self.aliceid
+        contract["renter_id"] = self.bobid
+        contract = self.rpc.contract_sign(contract, self.alice_key)
+        contract = self.rpc.contract_sign(contract, self.bob_key)
+        self.assertTrue(self.rpc.contract_is_complete(contract))
+        for key in contract.keys():
+            _contract = contract.copy()
+            _contract[key] = None
+            self.assertFalse(self.rpc.contract_is_complete(_contract))
 
     @unittest.skip("not implemented")
     def test_invalid_signatures(self):

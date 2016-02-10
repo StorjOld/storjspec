@@ -4,7 +4,7 @@
 
 
 digraph G {
-    label="Merkle leaf = hash(hash(challenge + shard data))"
+    label="Merkle leaf = hash(hash(challenge + data))"
 
     rankdir = BT;
 

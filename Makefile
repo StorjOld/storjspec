@@ -59,14 +59,14 @@ test_storjlib_contract: setup
 	$(PY) storjlib/contract/test.py --verbose
 
 
-test_storjlib_audit: setup
-	$(PY) storjlib/audit/test.py --verbose
+test_storjlib_challenge: setup
+	$(PY) storjlib/challenge/test.py --verbose
 
 
-test_storjlib: test_storjlib_contract test_storjlib_audit test_storjlib_store
+test_storjlib: test_storjlib_contract test_storjlib_challenge test_storjlib_store
 test: test_storjnet test_storjlib
 
 
 graphs:
 	dot -Tpng status.dot -o status.png
-	dot -Tpng storjlib/audit/scheme.dot -o storjlib/audit/scheme.png
+	dot -Tpng storjlib/challenge/scheme.dot -o storjlib/challenge/scheme.png

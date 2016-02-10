@@ -80,7 +80,6 @@ class TestAuditValidate(_AbsAudit, unittest.TestCase):
     def test_validate(self):
         self.assertTrue(self.rpc.audit_validate(PROOF, ROOT, 3, LEAVES))
 
-    @unittest.skip("not implemented")
     def test_invalid_challange_response(self):
         # attacker provides proof with the wrong response hoping its not checked
         # does not match any leaf
