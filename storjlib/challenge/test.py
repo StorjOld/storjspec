@@ -61,7 +61,7 @@ class TestAuditPrepare(_AbsAudit, unittest.TestCase):
 
     def test_prepare(self):
         self.assertEqual(self.shardid, SHARD_ID)
-        leaves = self.rpc.audit_prepare(SHARD_ID, CHALLENGES)
+        leaves = self.rpc.challenge_prepare(SHARD_ID, CHALLENGES)
         self.assertEqual(leaves, LEAVES)
 
 
@@ -69,7 +69,7 @@ class TestAuditPerform(_AbsAudit, unittest.TestCase):
 
     def test_preform(self):
         self.assertEqual(self.shardid, SHARD_ID)
-        proof = self.rpc.audit_perform(SHARD_ID, LEAVES, CHALLENGE)
+        proof = self.rpc.challenge_perform(SHARD_ID, LEAVES, CHALLENGE)
         self.assertEqual(proof, PROOF)
 
     # TODO test invalid input
@@ -78,29 +78,29 @@ class TestAuditPerform(_AbsAudit, unittest.TestCase):
 class TestAuditValidate(_AbsAudit, unittest.TestCase):
 
     def test_validate(self):
-        self.assertTrue(self.rpc.audit_validate(PROOF, ROOT, 3, LEAVES))
+        self.assertTrue(self.rpc.challenge_validate(PROOF, ROOT, 3, LEAVES))
 
     def test_invalid_challange_response(self):
         # attacker provides proof with the wrong response hoping its not checked
         # does not match any leaf
         proof = copy.deepcopy(PROOF)
         proof[0][1][1] = h("DEADBEEF")
-        self.assertFalse(self.rpc.audit_validate(proof, ROOT, 3, LEAVES))
+        self.assertFalse(self.rpc.challenge_validate(proof, ROOT, 3, LEAVES))
 
     def test_proof_to_shallow(self):
         # attacker provides a shallow proof hoping the depth is not checked
-        self.assertFalse(self.rpc.audit_validate(PROOF, ROOT, 4, LEAVES))
+        self.assertFalse(self.rpc.challenge_validate(PROOF, ROOT, 4, LEAVES))
 
     def test_proof_for_wrong_leaf(self):
         # attacker provides proof for an old challenge hoping its not checked
         # match wrong leaf
-        proof = self.rpc.audit_perform(SHARD_ID, LEAVES, CHALLENGES[2])
-        self.assertFalse(self.rpc.audit_validate(proof, ROOT, 3, LEAVES))
+        proof = self.rpc.challenge_perform(SHARD_ID, LEAVES, CHALLENGES[2])
+        self.assertFalse(self.rpc.challenge_validate(proof, ROOT, 3, LEAVES))
 
     def test_proof_for_wrong_root(self):
         # attacker provides proof for wrong merkle root hoping its not checked
         root = h("DEADBEEF")
-        self.assertFalse(self.rpc.audit_validate(PROOF, root, 3, LEAVES))
+        self.assertFalse(self.rpc.challenge_validate(PROOF, root, 3, LEAVES))
 
     # TODO other possible invalid proofs?
     # TODO test invalid input formats
