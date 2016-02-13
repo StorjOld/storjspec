@@ -69,9 +69,10 @@ class TestAuditPerform(_AbsAudit, unittest.TestCase):
 
     def test_preform(self):
         self.assertEqual(self.shardid, SHARD_ID)
-        proof = self.rpc.challenge_perform(SHARD_ID, LEAVES, CHALLENGE)
+        proof = self.rpc.challenge_perform(SHARD_ID, LEAVES, CHALLENGE, 0, 0)
         self.assertEqual(proof, PROOF)
 
+    # TODO test size and offset
     # TODO test invalid input
 
 
@@ -94,7 +95,8 @@ class TestAuditValidate(_AbsAudit, unittest.TestCase):
     def test_proof_for_wrong_leaf(self):
         # attacker provides proof for an old challenge hoping its not checked
         # match wrong leaf
-        proof = self.rpc.challenge_perform(SHARD_ID, LEAVES, CHALLENGES[2])
+        proof = self.rpc.challenge_perform(SHARD_ID, LEAVES,
+                                           CHALLENGES[2], 0, 0)
         self.assertFalse(self.rpc.challenge_validate(proof, ROOT, 3, LEAVES))
 
     def test_proof_for_wrong_root(self):
