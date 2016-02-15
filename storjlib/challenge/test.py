@@ -19,19 +19,19 @@ def h(hexdata):
 
 def _c(n):
     seed = binascii.hexlify(os.urandom(32))
-    return {"seed": seed, "offset": 0, "size": 0}
+    return {"seed": seed, "offset": 1024 * n, "size": 1024}
 
 
 NUMCHALLENGES = 5
-SHARD_DATA = os.urandom(1024)  # 1M
+SHARD_DATA = os.urandom(1024 * 1024)  # 1M
 SHARD_HEXDATA = binascii.hexlify(SHARD_DATA)
 SHARD_ID = h(SHARD_HEXDATA)
 CHALLENGES = [_c(n) for n in range(NUMCHALLENGES)]
-R0 = h(CHALLENGES[0]["seed"] + SHARD_HEXDATA)
-R1 = h(CHALLENGES[1]["seed"] + SHARD_HEXDATA)
-R2 = h(CHALLENGES[2]["seed"] + SHARD_HEXDATA)
-R3 = h(CHALLENGES[3]["seed"] + SHARD_HEXDATA)
-R4 = h(CHALLENGES[4]["seed"] + SHARD_HEXDATA)
+R0 = h(CHALLENGES[0]["seed"] + SHARD_HEXDATA[CHALLENGES[0]["offset"]*2:(CHALLENGES[0]["offset"]+CHALLENGES[0]["size"])*2])  # NOQA
+R1 = h(CHALLENGES[1]["seed"] + SHARD_HEXDATA[CHALLENGES[1]["offset"]*2:(CHALLENGES[1]["offset"]+CHALLENGES[1]["size"])*2])  # NOQA
+R2 = h(CHALLENGES[2]["seed"] + SHARD_HEXDATA[CHALLENGES[2]["offset"]*2:(CHALLENGES[2]["offset"]+CHALLENGES[2]["size"])*2])  # NOQA
+R3 = h(CHALLENGES[3]["seed"] + SHARD_HEXDATA[CHALLENGES[3]["offset"]*2:(CHALLENGES[3]["offset"]+CHALLENGES[3]["size"])*2])  # NOQA
+R4 = h(CHALLENGES[4]["seed"] + SHARD_HEXDATA[CHALLENGES[4]["offset"]*2:(CHALLENGES[4]["offset"]+CHALLENGES[4]["size"])*2])  # NOQA
 R5 = ""
 R6 = ""
 R7 = ""
