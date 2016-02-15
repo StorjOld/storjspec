@@ -17,16 +17,21 @@ def h(hexdata):
     return binascii.hexlify(digest)
 
 
+def _c(n):
+    seed = binascii.hexlify(os.urandom(32))
+    return {"seed": seed, "offset": 0, "size": 0}
+
+
 NUMCHALLENGES = 5
 SHARD_DATA = os.urandom(1024)  # 1M
 SHARD_HEXDATA = binascii.hexlify(SHARD_DATA)
 SHARD_ID = h(SHARD_HEXDATA)
-CHALLENGES = [binascii.hexlify(os.urandom(32)) for n in range(NUMCHALLENGES)]
-R0 = h(CHALLENGES[0] + SHARD_HEXDATA)
-R1 = h(CHALLENGES[1] + SHARD_HEXDATA)
-R2 = h(CHALLENGES[2] + SHARD_HEXDATA)
-R3 = h(CHALLENGES[3] + SHARD_HEXDATA)
-R4 = h(CHALLENGES[4] + SHARD_HEXDATA)  # TODO heartbeat offset 2K size 1K
+CHALLENGES = [_c(n) for n in range(NUMCHALLENGES)]
+R0 = h(CHALLENGES[0]["seed"] + SHARD_HEXDATA)
+R1 = h(CHALLENGES[1]["seed"] + SHARD_HEXDATA)
+R2 = h(CHALLENGES[2]["seed"] + SHARD_HEXDATA)
+R3 = h(CHALLENGES[3]["seed"] + SHARD_HEXDATA)
+R4 = h(CHALLENGES[4]["seed"] + SHARD_HEXDATA)
 R5 = ""
 R6 = ""
 R7 = ""

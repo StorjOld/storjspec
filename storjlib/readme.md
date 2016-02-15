@@ -1,10 +1,15 @@
 # Storjlib specification and compatibility tests
 
-[Python reference implementation](https://github.com/storj/storjlib)
-[node.js reference implementation](https://github.com/Storj/node-storj)
+Components
 
  * [contract](contract): A storage contract defines obligations between farmer and renter.
  * [challenge](challenge): Audits provide proof of storage and heartbeats proof of availability.
+
+
+Reference implementations
+
+ * [Python](https://github.com/storj/storjlib)
+ * [node.js](https://github.com/Storj/node-storj)
 
 
 ## User API calls overview
