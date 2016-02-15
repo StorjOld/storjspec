@@ -26,7 +26,7 @@ R0 = h(CHALLENGES[0] + SHARD_HEXDATA)
 R1 = h(CHALLENGES[1] + SHARD_HEXDATA)
 R2 = h(CHALLENGES[2] + SHARD_HEXDATA)
 R3 = h(CHALLENGES[3] + SHARD_HEXDATA)
-R4 = h(CHALLENGES[4] + SHARD_HEXDATA)
+R4 = h(CHALLENGES[4] + SHARD_HEXDATA)  # TODO heartbeat offset 2K size 1K
 R5 = ""
 R6 = ""
 R7 = ""
@@ -34,7 +34,8 @@ LEAVES = [h(R0), h(R1), h(R2), h(R3), h(R4)]
 ALL_LEAVES = [h(R0), h(R1), h(R2), h(R3), h(R4), h(R5), h(R6), h(R7)]
 L0, L1, L2, L3, L4, L5, L6, L7 = ALL_LEAVES
 ROOT = h(h(h(L0 + L1) + h(L2 + L3)) + h(h(L4 + L5) + h(L6 + L7)))
-CHALLENGE = CHALLENGES[3]
+AUDIT_CHALLENGE = CHALLENGES[3]
+HEARTBEAT_CHALLENGE = CHALLENGES[4]
 N01 = h(L0 + L1)
 N4567 = h(h(L4 + L5) + h(L6 + L7))
 PROOF = [[N01, [L2, [R3]]], N4567]
@@ -69,7 +70,7 @@ class TestAuditPerform(_AbsAudit, unittest.TestCase):
 
     def test_preform(self):
         self.assertEqual(self.shardid, SHARD_ID)
-        proof = self.rpc.challenge_perform(SHARD_ID, LEAVES, CHALLENGE, 0, 0)
+        proof = self.rpc.challenge_perform(SHARD_ID, LEAVES, AUDIT_CHALLENGE)
         self.assertEqual(proof, PROOF)
 
     # TODO test size and offset
@@ -95,8 +96,7 @@ class TestAuditValidate(_AbsAudit, unittest.TestCase):
     def test_proof_for_wrong_leaf(self):
         # attacker provides proof for an old challenge hoping its not checked
         # match wrong leaf
-        proof = self.rpc.challenge_perform(SHARD_ID, LEAVES,
-                                           CHALLENGES[2], 0, 0)
+        proof = self.rpc.challenge_perform(SHARD_ID, LEAVES, CHALLENGES[2])
         self.assertFalse(self.rpc.challenge_validate(proof, ROOT, 3, LEAVES))
 
     def test_proof_for_wrong_root(self):
