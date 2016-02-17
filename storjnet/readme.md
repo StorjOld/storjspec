@@ -12,9 +12,9 @@
 | pubsub_subscribe      | schema                      |                     | Subscribe to matching events.                                 |
 | pubsub_subscriptions  |                             | [schema]            | List current subscriptions.                                   |
 | pubsub_unsubscribe    | schema                      |                     | Unsubscribe from matching events.                             |
-| pubsub_events         | schema                      | [event]             | Events received for subscription since last called.           | 
+| pubsub_events         | schema                      | [event]             | Events received for subscription since last called.           |
 |                       |                             |                     |                                                               |
-| message_send          | nodeid, ip, port, message   | bool                | Send a direct message to a known node.                        | 
+| message_send          | nodeid, ip, port, message   | bool                | Send a direct message to a known node.                        |
 | message_list          |                             | {nodeid: [message]} | Messages received since last called.                          |
 |                       |                             |                     |                                                               |
 | stream_list           |                             | {streamid: bufsize} | List currently open streams and unread bytes.                 |
@@ -36,12 +36,12 @@
 ## POSSIBLE CANDIDATS
 
 
-### [Combining Flexibility and Scalability in a Peer-to-Peer Publish/Subscribe System][3]    
+### [Combining Flexibility and Scalability in a Peer-to-Peer Publish/Subscribe System][3]
 
 Metadata:
 
- * Source: Princeton/Yale, USA   
- * Date: 2005  
+ * Source: Princeton/Yale, USA
+ * Date: 2005
  * Overlay: Skip Graph
  * PubSub: Content-Based
 
@@ -52,12 +52,12 @@ Comments:
  * Needs to be extended to account for malitious brokers.
 
 
-### [A Peer-to-Peer Approach to Content-Based Publish/Subscribe][5]    
+### [A Peer-to-Peer Approach to Content-Based Publish/Subscribe][4]
 
 Metadata:
 
- * Source: Darmstadt, Germany    
- * Date: 2003  
+ * Source: Darmstadt, Germany
+ * Date: 2003
  * Overlay: Chord
  * PubSub: Content-Based
 
@@ -68,28 +68,14 @@ Comments:
  * TODO can be adapted to use Kademlia?
 
 
-### [Building Content-Based Publish/Subscribe Systems with Distributed Hash Tables][6]    
-
-Metadata:
-
- * Source: Toronto, Canada       
- * Date: 2003  
- * Overlay: Pastry
- * PubSub: Content-Based
-
-Comments:
-
- * TODO understand fully
-
-
 ## UNSUATABLE CANDIDATS
 
-### [Routing Protocol of Semantics-Based Publish/Subscribe Systems over Kademlia Network][2]    
+### [Routing Protocol of Semantics-Based Publish/Subscribe Systems over Kademlia Network][6]
 
 Metadata:
 
- * Source: Peking, China         
- * Date: 2009  
+ * Source: Peking, China
+ * Date: 2009
  * Overlay: Kademlia
  * PubSub: Semantics-Based
 
@@ -100,12 +86,12 @@ Comments:
  * Unbalanced: Unlikely to handle skewed data sets (price quotes).
 
 
-### [Content-based Publish-Subscribe Over Structured P2P Networks][4]    
+### [Content-based Publish-Subscribe Over Structured P2P Networks][5]
 
 Metadata:
 
- * Source: Patras, Greece        
- * Date: 2004  
+ * Source: Patras, Greece
+ * Date: 2004
  * Overlay: Chord
  * PubSub: Content-Based
 
@@ -114,12 +100,27 @@ Comments:
  * Unbalanced: Unlikely to handle skewed data sets (price quotes).
 
 
-### [SCRIBE: The design of a large-scale event notification infrastructure][6]    
+### [Building Content-Based Publish/Subscribe Systems with Distributed Hash Tables][2]
 
 Metadata:
 
- * Source: Microsoft             
- * Date: 2001  
+ * Source: Toronto, Canada
+ * Date: 2003
+ * Overlay: Pastry
+ * PubSub: Content-Based
+
+Comments:
+
+ * Content-Based to Topic-Based conversion schema may be usefull for gravety well paper.
+ * Unbalanced: Unlikely to handle skewed data sets (price quotes).
+
+
+### [SCRIBE: The design of a large-scale event notification infrastructure][1]
+
+Metadata:
+
+ * Source: Microsoft
+ * Date: 2001
  * Overlay: Pastry
  * PubSub: Topic-Based
 
