@@ -78,7 +78,6 @@ class TestAuditPerform(_AbsAudit, unittest.TestCase):
         proof = self.rpc.challenge_perform(SHARD_ID, LEAVES, AUDIT_CHALLENGE)
         self.assertEqual(proof, PROOF)
 
-    # TODO test size and offset
     # TODO test invalid input
 
 
