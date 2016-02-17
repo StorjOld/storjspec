@@ -29,24 +29,11 @@
  * Scalable overlay (millions of nodes)
  * Scalable pubsub (billions of events)
  * Content based pubsub (filter by price)
- * Handles skewed pubsub (stock quotes)
+ * Handles skewed pubsub data (price quotes)
  * Attack resistant pubsub (incentives exist to suppress events)
 
 
 ## POSSIBLE CANDIDATS
-
-### [Distributed Semantic Algorithm for Power Constrained Publish/Subscribe Routing][1]    
-
-Metadata:
-
- * Source: Oulu, Finnland        
- * Date: 2010  
- * Overlay: TODO
- * PubSub: TODO
-
-Comments:
-
- * TODO understand fully
 
 
 ### [Combining Flexibility and Scalability in a Peer-to-Peer Publish/Subscribe System][3]    
@@ -61,21 +48,8 @@ Metadata:
 Comments:
 
  * This has a high chance of being best paper!
+ * Tested with large realistic data sets.
  * Needs to be extended to account for malitious brokers.
-
-
-### [Content-based Publish-Subscribe Over Structured P2P Networks][4]    
-
-Metadata:
-
- * Source: Patras, Greece        
- * Date: 2004  
- * Overlay: Chord
- * PubSub: Content-Based
-
-Comments:
-
- * TODO understand fully
 
 
 ### [A Peer-to-Peer Approach to Content-Based Publish/Subscribe][5]    
@@ -123,10 +97,24 @@ Comments:
 
  * Requires predefined atomic topics (max 80).
  * No content based filtering (eg filter by price).
- * Unlikely to handle skewed data sets (price quotes).
+ * Unbalanced: Unlikely to handle skewed data sets (price quotes).
 
 
-### [SCRIBE: The design of a large-scale event notification infrastructure][7]    
+### [Content-based Publish-Subscribe Over Structured P2P Networks][4]    
+
+Metadata:
+
+ * Source: Patras, Greece        
+ * Date: 2004  
+ * Overlay: Chord
+ * PubSub: Content-Based
+
+Comments:
+
+ * Unbalanced: Unlikely to handle skewed data sets (price quotes).
+
+
+### [SCRIBE: The design of a large-scale event notification infrastructure][6]    
 
 Metadata:
 
@@ -145,5 +133,4 @@ Comments:
 [3]: papers/princeton_yale.pdf
 [4]: papers/darmstadt.pdf
 [5]: papers/petras.pdf
-[6]: papers/oulu.pdf
-[7]: papers/ICBRP.pdf
+[6]: papers/ICBRP.pdf
