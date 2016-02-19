@@ -6,22 +6,22 @@
 
 ## User API Calls
 
-| Command               | Arguments                   | Returns             | Description                                                   |
-|-----------------------|-----------------------------|---------------------|---------------------------------------------------------------|
-| pubsub_publish        | event                       |                     | Publish an event on the network.                              |
-| pubsub_subscribe      | schema                      |                     | Subscribe to matching events.                                 |
-| pubsub_subscriptions  |                             | [schema]            | List current subscriptions.                                   |
-| pubsub_unsubscribe    | schema                      |                     | Unsubscribe from matching events.                             |
-| pubsub_events         | schema                      | [event]             | Events received for subscription since last called.           |
-|                       |                             |                     |                                                               |
-| message_send          | nodeid, ip, port, message   | bool                | Send a direct message to a known node.                        |
-| message_list          |                             | {nodeid: [message]} | Messages received since last called.                          |
-|                       |                             |                     |                                                               |
-| stream_list           |                             | {streamid: bufsize} | List currently open streams and unread bytes.                 |
-| stream_open           | nodeid, ip, port            | streamid            | Open a datastream with a node.                                |
-| stream_close          | streamid                    |                     | Close a datastream with a node.                               |
-| stream_read           | streamid, data              |                     | Read from a datastream with a node.                           |
-| stream_write          | streamid, len               |                     | Write to a datastream with a node.                            |
+| Command               | Arguments                   | Returns             | Description                                           |
+|-----------------------|-----------------------------|---------------------|-------------------------------------------------------|
+| pubsub_publish        | topic, event                |                     | Publish an event on the network for a given topic.    |
+| pubsub_subscribe      | topic                       |                     | Subscribe to events for given topic.                  |
+| pubsub_subscriptions  |                             | [topic]             | List current subscriptions.                           |
+| pubsub_unsubscribe    | topic                       |                     | Unsubscribe from events for given topic.              |
+| pubsub_events         | topic                       | [event]             | Events received for topic since last called.          |
+|                       |                             |                     |                                                       |
+| message_send          | nodeid, ip, port, message   | bool                | Send a direct message to a known node.                |
+| message_list          |                             | {nodeid: [message]} | Messages received since last called.                  |
+|                       |                             |                     |                                                       |
+| stream_list           |                             | {streamid: bufsize} | List currently open streams and unread bytes.         |
+| stream_open           | nodeid, ip, port            | streamid            | Open a datastream with a node.                        |
+| stream_close          | streamid                    |                     | Close a datastream with a node.                       |
+| stream_read           | streamid, data              |                     | Read from a datastream with a node.                   |
+| stream_write          | streamid, len               |                     | Write to a datastream with a node.                    |
 
 
 ## Basic requirements
@@ -66,6 +66,55 @@ Comments:
  * This has a high chance of being best paper!
  * TODO understand fully
  * TODO can be adapted to use Kademlia?
+
+
+### Quasar: A Probabilistic Publish-Subscribe System for Social Networks
+
+Metadata:
+
+ * Source: Cornell, USA
+ * Date: 2008
+ * Overlay: TODO
+ * PubSub: Topic-Based
+
+Comments:
+
+ * TODO understand fully
+
+
+## UNCHECKED CANDIDATS
+
+### [BubbleStorm: Resilient, Probabilistic, and Exhaustive Peer-to-Peer Search][8]
+
+Metadata:
+
+ * TODO
+
+Comments:
+
+ * TODO understand fully
+
+
+### [Quasar: A Probabilistic Publish-Subscribe System for Social Networks][7]
+
+Metadata:
+
+ * TODO
+
+Comments:
+
+ * TODO understand fully
+
+
+### [Corona: A High Performance Publish-Subscribe System for the World Wide Web][9]
+
+Metadata:
+
+ * TODO
+
+Comments:
+
+ * TODO understand fully
 
 
 ## UNSUATABLE CANDIDATS
@@ -135,3 +184,6 @@ Comments:
 [4]: papers/darmstadt.pdf
 [5]: papers/petras.pdf
 [6]: papers/ICBRP.pdf
+[7]: papers/quasar.pdf
+[8]: papers/bubblestorm.pdf
+[9]: papers/corona.pdf
