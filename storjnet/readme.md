@@ -6,22 +6,26 @@
 
 ## User API Calls
 
-| Command               | Arguments                   | Returns             | Description                                           |
-|-----------------------|-----------------------------|---------------------|-------------------------------------------------------|
-| pubsub_publish        | topic, event                |                     | Publish an event on the network for a given topic.    |
-| pubsub_subscribe      | topic                       |                     | Subscribe to events for given topic.                  |
-| pubsub_subscriptions  |                             | [topic]             | List current subscriptions.                           |
-| pubsub_unsubscribe    | topic                       |                     | Unsubscribe from events for given topic.              |
-| pubsub_events         | topic                       | [event]             | Events received for topic since last called.          |
-|                       |                             |                     |                                                       |
-| message_send          | nodeid, ip, port, message   | bool                | Send a direct message to a known node.                |
-| message_list          |                             | {nodeid: [message]} | Messages received since last called.                  |
-|                       |                             |                     |                                                       |
-| stream_list           |                             | {streamid: bufsize} | List currently open streams and unread bytes.         |
-| stream_open           | nodeid, ip, port            | streamid            | Open a datastream with a node.                        |
-| stream_close          | streamid                    |                     | Close a datastream with a node.                       |
-| stream_read           | streamid, data              |                     | Read from a datastream with a node.                   |
-| stream_write          | streamid, len               |                     | Write to a datastream with a node.                    |
+| Command               | Arguments         | Returns             | Description                                           |
+|-----------------------|-------------------|---------------------|-------------------------------------------------------|
+| pubsub_publish        | topic, event      |                     | Publish an event on the network for a given topic.    |
+| pubsub_subscribe      | topic             |                     | Subscribe to events for given topic.                  |
+| pubsub_subscriptions  |                   | [topic]             | List current subscriptions.                           |
+| pubsub_unsubscribe    | topic             |                     | Unsubscribe from events for given topic.              |
+| pubsub_events         | topic             | [event]             | Events received for topic since last called.          |
+|                       |                   |                     |                                                       |
+| dht_put               | key, value        | bool                | Store key/value pair in DHT.                          |
+| dht_get               | key               | value               | Get value for given key in DHT.                       |
+| dht_find              | nodeid            | [ip, port]          | Get current network transport info for given nodeid.  |
+|                       |                   |                     |                                                       |
+| message_send          | nodeid, message   | bool                | Send a direct message to a known node.                |
+| message_list          |                   | {nodeid: [message]} | Messages received since last called.                  |
+|                       |                   |                     |                                                       |
+| stream_list           |                   | {streamid: bufsize} | List currently open streams and unread bytes.         |
+| stream_open           | nodeid,           | streamid            | Open a datastream with a node.                        |
+| stream_close          | streamid          |                     | Close a datastream with a node.                       |
+| stream_read           | streamid, data    |                     | Read from a datastream with a node.                   |
+| stream_write          | streamid, len     |                     | Write to a datastream with a node.                    |
 
 
 ## Basic requirements
