@@ -28,19 +28,17 @@ digraph G {
         style=filled;
         color=lightblue;
 
-        "DHT";
-        "Pub/Sub" [shape=hexagon]; // enable publishing and subscribing to events
+        "DHT (Kademlia)" [fillcolor=orange, shape=hexagon];
+        "Topic Pub/Sub (Quasar)" [fillcolor=orange, shape=ellipse]; // enable publishing and subscribing to events
         "Data streams" [shape=hexagon]; // full duplex data transfer
         "Messaging" [shape=hexagon]; // to shortcut the pubsub after peer found
         "RPC"; // rpc calls and data transfer between clients
         "E2EE"; // End-to-end encryption
-        "Kademlia";
-        "Quasar";
         "Bandwidth limiter";
         "REST (SIP 002)"; // put/get shards
     };
-    "DHT" -> "Kademlia" -> "RPC";
-    "Pub/Sub" -> "Quasar" -> "RPC";
+    "DHT (Kademlia)" -> "RPC";
+    "Topic Pub/Sub (Quasar)" -> "RPC";
     "Messaging" -> "RPC";
     "Data streams" -> "RPC";
     "RPC" -> "Bandwidth limiter";
@@ -63,7 +61,9 @@ digraph G {
         "Ledger (SIP 001)" [shape=hexagon];
         "Graylist (SIP 004)";
         "CHISQRDTEST (SIP 003)";
+        "Content Pub/Sub" [shape=hexagon]; // enable publishing and subscribing to events
     };
+    "Content Pub/Sub" -> "Topic Pub/Sub (Quasar)";
     "Audit" -> "Contract"; // when/how to perform the audit
     "Audit" -> "Store"; // perform audit challange
     "Audit" -> "Ledger (SIP 001)"; // save result in ledger
@@ -91,13 +91,13 @@ digraph G {
     "Roy" -> "Contract manager";
     "Contract manager" -> "Database";
     "Wallet" -> "Blockchain";
+    "Roy" -> "Content Pub/Sub"; // ask/bid on contracts
     "Roy" -> "Messaging";
     "Roy" -> "Audit"; // perform audits
     "Roy" -> "Contract"; // verify agreed to use/provide a service
     "Roy" -> "Heartbeat";
     "Roy" -> "Ledger (SIP 001)"; // verify service was used/provided
     "Roy" -> "Wallet"; // transfer funds
-    "Roy" -> "Pub/Sub"; // ask/bid on contracts
     "Roy" -> "Store";
 
     // EXTERNAL
