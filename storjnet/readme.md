@@ -1,23 +1,32 @@
 # Storj network protocol layer
 
+
 Reference implements:
 
  * [Python](https://github.com/storj/storjnet)
  * [node.js](https://github.com/Storj/node-storj)
 
 
+Algorithms:
+
+ * Publish/Subscribe: [Quasar](todo.link)
+ * Distributed hash table: [Kademlia](todo.link)
+ * Direct Messaging: Simple rpc calls
+ * Data streams: Simple rpc calls
+
+
 ## User API Calls
 
 | Command               | Arguments         | Returns             | Description                                           |
 |-----------------------|-------------------|---------------------|-------------------------------------------------------|
+| dht_put               | key, value        | bool                | Store key/value pair in DHT.                          |
+| dht_get               | key               | value               | Get value for given key in DHT.                       |
+|                       |                   |                     |                                                       |
 | pubsub_publish        | topic, event      |                     | Publish an event on the network for a given topic.    |
 | pubsub_subscribe      | topic             |                     | Subscribe to events for given topic.                  |
 | pubsub_subscriptions  |                   | [topic]             | List current subscriptions.                           |
 | pubsub_unsubscribe    | topic             |                     | Unsubscribe from events for given topic.              |
 | pubsub_events         | topic             | [event]             | Events received for topic since last called.          |
-|                       |                   |                     |                                                       |
-| dht_put               | key, value        | bool                | Store key/value pair in DHT.                          |
-| dht_get               | key               | value               | Get value for given key in DHT.                       |
 |                       |                   |                     |                                                       |
 | message_send          | nodeid, message   | bool                | Send a direct message to a known node.                |
 | message_list          |                   | {nodeid: [message]} | Messages received since last called (in order).       |
