@@ -1,8 +1,9 @@
 # Storj network protocol layer
 
-[Python reference implementation](https://github.com/storj/storjnet)
+Reference implements:
 
-[node.js reference implementation](https://github.com/Storj/node-storj)
+ * [Python](https://github.com/storj/storjnet)
+ * [node.js](https://github.com/Storj/node-storj)
 
 
 ## User API Calls
@@ -19,7 +20,7 @@
 | dht_get               | key               | value               | Get value for given key in DHT.                       |
 |                       |                   |                     |                                                       |
 | message_send          | nodeid, message   | bool                | Send a direct message to a known node.                |
-| message_list          |                   | {nodeid: [message]} | Messages received since last called.                  |
+| message_list          |                   | {nodeid: [message]} | Messages received since last called (in order).       |
 |                       |                   |                     |                                                       |
 | stream_list           |                   | {streamid: bufsize} | List currently open streams and unread bytes.         |
 | stream_open           | nodeid,           | streamid            | Open a datastream with a node.                        |
@@ -30,18 +31,21 @@
 
 ## Network RPC calls
 
-| Command               | Arguments         | Returns             | Description                                           |
-|-----------------------|-------------------|---------------------|-------------------------------------------------------|
-| quasar_notify         | topic, event      |                     | TODO description                                      |
-| quasar_filters        |                   | [filter]            | TODO description                                      |
-|                       |                   |                     |                                                       |
-| kademlia_ping         |                   |                     | TODO description                                      |
-| kademlia_store        | key, value        |                     | TODO description                                      |
-| kademlia_find_node    | key               |                     | TODO description                                      |
-| kademlia_find_value   | key               |                     | TODO description                                      |
-|                       |                   |                     |                                                       |
-| message_notify        | message           |                     | TODO description                                      |
-|                       |                   |                     |                                                       |
-| stream_open           |                   | streamid            | Open a datastream with a node.                        |
-| stream_close          | streamid          |                     | Close a datastream with a node.                       |
-| stream_write          | streamid, data    | int                 | Write to a datastream with a node.                    |
+All rpc calls have an implied arguments calling nodeid, ip, port and signature (covers everything but itself).
+
+| Command               | Arguments                     | Returns   | Description                                           |
+|-----------------------|-------------------------------|-----------|-------------------------------------------------------|
+| quasar_filters        |                               | [filter]  | Paper: Algorithm 1 line 8                             |
+| quasar_update         | [filter]                      |           | Paper: Algorithm 1 line 12                            |
+| quasar_notify         | topic, event, ttl, publishers |           | Paper: Algorithm 2 line 8, 21, 23                     |
+|                       |                               |           |                                                       |
+| kademlia_ping         |                               |           | TODO description                                      |
+| kademlia_store        | key, value                    |           | TODO description                                      |
+| kademlia_find_node    | key                           | [node]    | TODO description                                      |
+| kademlia_find_value   | key                           | value     | TODO description                                      |
+|                       |                               |           |                                                       |
+| message_notify        | message                       |           | TODO description                                      |
+|                       |                               |           |                                                       |
+| stream_open           |                               | streamid  | Open a datastream with a node.                        |
+| stream_close          | streamid                      |           | Close a datastream with a node.                       |
+| stream_write          | streamid, data                | int       | Write to a datastream with a node.                    |
