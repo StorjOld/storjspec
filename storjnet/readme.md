@@ -48,20 +48,21 @@ All rpc calls have the following implied arguments:
 
 FIXME reading/writing data is going to be fuck slow if everything has to be signed/validated
 
-| Command               | Arguments                     | Returns   | Description                                           |
-|-----------------------|-------------------------------|-----------|-------------------------------------------------------|
-| quasar_filters        |                               | [filter]  | Paper: Algorithm 1 line 8                             |
-| quasar_update         | [filter]                      |           | Paper: Algorithm 1 line 12                            |
-| quasar_notify         | topic, event, ttl, publishers |           | Paper: Algorithm 2 line 8, 21, 23                     |
-|                       |                               |           |                                                       |
-| kademlia_ping         |                               |           | TODO description                                      |
-| kademlia_store        | key, value                    |           | TODO description                                      |
-| kademlia_find_node    | key                           | [node]    | TODO description                                      |
-| kademlia_find_value   | key                           | value     | TODO description                                      |
-|                       |                               |           |                                                       |
-| message_notify        | message                       |           | TODO description                                      |
-|                       |                               |           |                                                       |
-| stream_open           |                               | streamid  | Open a datastream with a node.                        |
-| stream_close          | streamid                      |           | Close a datastream with a node.                       |
-| stream_write          | streamid, data                | int       | Write to a datastream with a node.                    |
+| Command               | Arguments                     | Returns       | Description                                           |
+|-----------------------|-------------------------------|---------------|-------------------------------------------------------|
+| quasar_filters        |                               | [filter]      | Paper: Algorithm 1 line 8                             |
+| quasar_update         | [filter]                      |               | Paper: Algorithm 1 line 12                            |
+| quasar_notify         | topic, event, ttl, publishers |               | Paper: Algorithm 2 line 8, 21, 23                     |
+|                       |                               |               |                                                       |
+| kademlia_stun         |                               | [ip, port]    | TODO description                                      |
+| kademlia_ping         |                               | nodeid        | TODO description                                      |
+| kademlia_store        | key, value                    |               | TODO description                                      |
+| kademlia_find_node    | key                           | [node]        | TODO description                                      |
+| kademlia_find_value   | key                           | value         | TODO description                                      |
+|                       |                               |               |                                                       |
+| message_notify        | message                       |               | TODO description                                      |
+|                       |                               |               |                                                       |
+| stream_open           |                               | streamid      | Open a datastream with a node.                        |
+| stream_close          | streamid                      |               | Close a datastream with a node.                       |
+| stream_write          | streamid, data                | int           | Write to a datastream with a node.                    |
 
