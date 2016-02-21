@@ -40,7 +40,13 @@ Algorithms:
 
 ## Network RPC calls
 
-All rpc calls have an implied arguments calling nodeid, ip, port and signature (covers everything but itself).
+All rpc calls have the following implied arguments:
+
+ * netid
+ * caller [id, ip, port]
+ * signature
+
+FIXME reading/writing data is going to be fuck slow if everything has to be signed/validated
 
 | Command               | Arguments                     | Returns   | Description                                           |
 |-----------------------|-------------------------------|-----------|-------------------------------------------------------|
@@ -58,3 +64,4 @@ All rpc calls have an implied arguments calling nodeid, ip, port and signature (
 | stream_open           |                               | streamid  | Open a datastream with a node.                        |
 | stream_close          | streamid                      |           | Close a datastream with a node.                       |
 | stream_write          | streamid, data                | int       | Write to a datastream with a node.                    |
+
