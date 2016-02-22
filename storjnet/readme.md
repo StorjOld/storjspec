@@ -9,8 +9,8 @@ Reference implements:
 
 Algorithms:
 
- * Publish/Subscribe: [Quasar](todo.link)
- * Distributed hash table: [Kademlia](todo.link)
+ * Publish/Subscribe: [Quasar](http://www.cs.toronto.edu/iptps2008/final/70.pdf)
+ * Distributed hash table: [Kademlia](https://pdos.csail.mit.edu/~petar/papers/maymounkov-kademlia-lncs.pdf)
  * Direct Messaging: Simple rpc calls
  * Data streams: Simple rpc call
 
