@@ -12,7 +12,7 @@ Algorithms:
  * Publish/Subscribe: [Quasar](todo.link)
  * Distributed hash table: [Kademlia](todo.link)
  * Direct Messaging: Simple rpc calls
- * Data streams: Simple rpc calls
+ * Data streams: Simple rpc call
 
 
 ## User API Calls
@@ -21,6 +21,7 @@ Algorithms:
 |-----------------------|-------------------|-------------------------------|-------------------------------------------------------|
 | dht_put               | key, value        | bool                          | Store key/value pair in DHT.                          |
 | dht_get               | key               | value                         | Get value for given key in DHT.                       |
+| dht_find              | nodeid            | [ip, port]                    | Get [ip, port] of node if online.                     |
 |                       |                   |                               |                                                       |
 | pubsub_publish        | topic, event      |                               | Publish an event on the network for a given topic.    |
 | pubsub_subscribe      | topic             |                               | Subscribe to events for given topic.                  |
@@ -60,7 +61,7 @@ FIXME reading/writing data is going to be fuck slow if everything has to be sign
 | kademlia_find_node    | key                           | [node]        | TODO description                                      |
 | kademlia_find_value   | key                           | value         | TODO description                                      |
 |                       |                               |               |                                                       |
-| message_notify        | message                       |               | TODO description                                      |
+| message_notify        | message                       | bool          | Returns false if message queue is full.               |
 |                       |                               |               |                                                       |
 | stream_open           |                               | streamid      | Open a datastream with a node.                        |
 | stream_close          | streamid                      |               | Close a datastream with a node.                       |
