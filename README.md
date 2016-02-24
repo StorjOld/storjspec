@@ -15,9 +15,11 @@ storj application. It consists of three main components:
 
 ### Running compatibility tests
 
-    # set location rpc services (values listed are the expcted defaults)
-    export STORJNET_RPC_URL="http://127.0.0.1:5000"
+    # set location of rpc services (values listed are the expcted defaults)
     export STORJLIB_RPC_URL="http://127.0.0.1:7000"
+    export STORJNET_SWARMSIZE="50"
+    export STORJNET_USER_HOST="127.0.0.1"
+    export STORJNET_USER_START_PORT="5000"
 
     # run all tests
     make test
@@ -37,7 +39,7 @@ have to ensure a rpc service exposing the api is running for the tests.
 #### Run storjnet compatibility tests
 
     env:
-      - STORJNET_RPC_URL="http://127.0.0.1:5000"
+      - STORJNET_SWARMSIZE="5" STORJNET_USER_HOST="127.0.0.1" STORJNET_USER_START_PORT="5000"
 
     script:
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnet_compatibility.sh)"
@@ -50,12 +52,3 @@ have to ensure a rpc service exposing the api is running for the tests.
 
     script:
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjlib_compatibility.sh)"
-
-
-#### Run all compatibility tests
-
-    env:
-      - STORJLIB_RPC_URL="http://127.0.0.1:7000" STORJNET_RPC_URL="http://127.0.0.1:5000"
-
-    script:
-      - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_compatibility.sh)"
