@@ -17,6 +17,11 @@ class TestDhtUserApi(unittest.TestCase):
         self.assertTrue(self.rpc.dht_put("testkey", "testvalue"))
         self.assertEqual(self.rpc.dht_get("testkey"), "testvalue")
 
+    def test_find(self):
+        nodeid = self.rpc.dht_id()
+        result = self.rpc.dht_find(nodeid)
+        self.assertIsNotNone(result)
+
 
 if __name__ == "__main__":
     unittest.main()

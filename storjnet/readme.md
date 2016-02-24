@@ -21,7 +21,9 @@ Algorithms:
 |-----------------------|-------------------|-------------------------------|-------------------------------------------------------|
 | dht_put               | key, value        | bool                          | Store key/value pair in DHT.                          |
 | dht_get               | key               | value                         | Get value for given key in DHT.                       |
-| dht_find              | nodeid            | [ip, port]                    | Get [ip, port] of node if online.                     |
+| dht_find              | nodeid            | [ip, port]                    | Get [ip, port] if online, call with own id to stun.   |
+| dht_id                |                   | nodeid                        | Get the id of this node.                              |
+| dht_peers             |                   | [[nodeid, ip, port], ...]     | List neighbors.                                       |
 |                       |                   |                               |                                                       |
 | pubsub_publish        | topic, event      |                               | Publish an event on the network for a given topic.    |
 | pubsub_subscribe      | topic             |                               | Subscribe to events for given topic.                  |
