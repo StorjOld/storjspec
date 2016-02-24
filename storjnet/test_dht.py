@@ -1,4 +1,5 @@
 import os
+import random
 import unittest
 import pyjsonrpc
 
@@ -18,7 +19,6 @@ class TestDhtUserApi(unittest.TestCase):
 
     def test_peers(self):
         peers = self.rpc.dht_peers()
-        print("peers", peers)
         self.assertIsNotNone(peers)
         self.assertNotEqual(0, len(peers))
 
@@ -26,10 +26,19 @@ class TestDhtUserApi(unittest.TestCase):
         self.assertTrue(self.rpc.dht_put("testkey", "testvalue"))
         self.assertEqual(self.rpc.dht_get("testkey"), "testvalue")
 
-    def test_find(self):
+    def test_find_self(self):
         nodeid = self.rpc.dht_id()
         result = self.rpc.dht_find(nodeid)
         self.assertIsNotNone(result)
+
+    def test_find_peer(self):
+        nodeid = self.rpc.dht_id()
+        peer = self.rpc.dht_peers()
+        peerid, peer_ip, peer_port = random.choice(peer)
+        self.assertNotEqual(peerid, nodeid)
+        found_ip, found_port = self.rpc.dht_find(peerid)
+        self.assertEqual(peer_ip, found_ip)
+        self.assertEqual(peer_port, found_port)
 
 
 if __name__ == "__main__":
