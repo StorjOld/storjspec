@@ -1,11 +1,12 @@
 import os
+import binascii
 import random
 import unittest
 import pyjsonrpc
 
 
 # FIXME add to readme documentation
-SWARMSIZE = int(os.environ.get("STORJNET_SWARMSIZE", "5"))
+SWARMSIZE = int(os.environ.get("STORJNET_SWARMSIZE", "10"))
 USER_HOST = os.environ.get("STORJNET_USER_HOST", "127.0.0.1")
 USER_START_PORT = int(os.environ.get("STORJNET_USER_START_PORT", "5000"))
 
@@ -40,20 +41,55 @@ class TestDhtUserApi(unittest.TestCase):
 
     def test_find_self(self):
         node = random.choice(self.swarm)
-        nodeid = node.dht_id()
-        result = node.dht_find(nodeid)
+        hexnodeid = node.dht_id()
+        result = node.dht_find(hexnodeid)
         self.assertIsNotNone(result)
 
     def test_find_peer(self):
         node = random.choice(self.swarm)
-        nodeid = node.dht_id()
+        hexnodeid = node.dht_id()
         peer = node.dht_peers()
         peerid, peerip, peer_port = random.choice(peer)
-        self.assertNotEqual(peerid, nodeid)
+        self.assertNotEqual(peerid, hexnodeid)
         found_ip, found_port = node.dht_find(peerid)
         self.assertEqual(peerip, found_ip)
         self.assertEqual(peer_port, found_port)
 
+
+class TestMessageUserApi(unittest.TestCase):
+
+    def setUp(self):
+        self.swarm = []
+        for i in range(SWARMSIZE):
+            url = "http://{0}:{1}".format(USER_HOST, USER_START_PORT + i)
+            self.swarm.append(pyjsonrpc.HttpClient(url=url))
+
+    def test_send_receive(self):
+        senders = self.swarm[:len(self.swarm)/2]
+        receivers = self.swarm[len(self.swarm)/2:]
+        random.shuffle(senders)
+        random.shuffle(receivers)
+        for sender, receiver in zip(senders, receivers):
+            message = binascii.hexlify(os.urandom(32))
+
+            # check queue previously empty
+            self.assertFalse(bool(receiver.message_list()))
+
+            # send message
+            self.assertTrue(sender.message_send(receiver.dht_id(), message))
+
+            # check received
+            received = receiver.message_list()
+            self.assertTrue(sender.dht_id() in received)
+            messages = received[sender.dht_id()]
+            self.assertTrue(len(messages) == 1)
+            self.assertEqual(messages[0], message)
+
+    def test_ordering(self):
+        pass
+
+    def test_json(self):
+        pass
 
 if __name__ == "__main__":
     unittest.main()
