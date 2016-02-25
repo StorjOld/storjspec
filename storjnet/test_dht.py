@@ -5,8 +5,7 @@ import unittest
 import pyjsonrpc
 
 
-# FIXME add to readme documentation
-SWARMSIZE = int(os.environ.get("STORJNET_SWARMSIZE", "10"))
+SWARMSIZE = int(os.environ.get("STORJNET_SWARMSIZE", "50"))
 USER_HOST = os.environ.get("STORJNET_USER_HOST", "127.0.0.1")
 USER_START_PORT = int(os.environ.get("STORJNET_USER_START_PORT", "5000"))
 
@@ -55,6 +54,9 @@ class TestDhtUserApi(unittest.TestCase):
         self.assertEqual(peerip, found_ip)
         self.assertEqual(peer_port, found_port)
 
+    # TODO test find offline
+    # TODO test stun
+
 
 class TestMessageUserApi(unittest.TestCase):
 
@@ -90,6 +92,10 @@ class TestMessageUserApi(unittest.TestCase):
 
     def test_json(self):
         pass
+
+    def test_send_to_void(self):
+        pass
+
 
 if __name__ == "__main__":
     unittest.main()

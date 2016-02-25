@@ -21,9 +21,6 @@ storj application. It consists of three main components:
     export STORJNET_USER_HOST="127.0.0.1"
     export STORJNET_USER_START_PORT="5000"
 
-    # run all tests
-    make test
-
     # only run storjnet tests
     make test_storjnet
 
@@ -39,7 +36,7 @@ have to ensure a rpc service exposing the api is running for the tests.
 #### Run storjnet compatibility tests
 
     env:
-      - STORJNET_SWARMSIZE="5" STORJNET_USER_HOST="127.0.0.1" STORJNET_USER_START_PORT="5000"
+      - STORJNET_SWARMSIZE="50" STORJNET_USER_HOST="127.0.0.1" STORJNET_USER_START_PORT="5000"
 
     script:
       - bash -c "source <(curl -s https://raw.githubusercontent.com/Storj/storjspec/master/test_storjnet_compatibility.sh)"
