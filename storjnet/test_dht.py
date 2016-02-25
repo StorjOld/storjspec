@@ -54,8 +54,16 @@ class TestDhtUserApi(unittest.TestCase):
         self.assertEqual(peerip, found_ip)
         self.assertEqual(peer_port, found_port)
 
-    # TODO test find offline
-    # TODO test stun
+    def test_find_offline(self):
+        node = random.choice(self.swarm)
+        hexnodeid = binascii.hexlify(os.urandom(20))
+        result = node.dht_find(hexnodeid)
+        self.assertIsNone(result)
+
+    def test_stun(self):
+        node = random.choice(self.swarm)
+        result = node.dht_stun()
+        self.assertIsNotNone(result)
 
 
 class TestMessageUserApi(unittest.TestCase):
@@ -72,7 +80,7 @@ class TestMessageUserApi(unittest.TestCase):
         random.shuffle(senders)
         random.shuffle(receivers)
         for sender, receiver in zip(senders, receivers):
-            message = binascii.hexlify(os.urandom(32))
+            message = binascii.hexlify(os.urandom(64))
 
             # check queue previously empty
             self.assertFalse(bool(receiver.message_list()))
