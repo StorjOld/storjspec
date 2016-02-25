@@ -147,10 +147,32 @@ class TestMessageUserApi(unittest.TestCase):
         self.assertEqual(messages[0], message)
 
     def test_json(self):
-        pass
+        sender = self.swarm[0]
+        receiver = self.swarm[-1]
+        message = {
+            "test_object": {"foo": "bar"},
+            "test_array": [0, 1, 2, 3, 4, 5],
+            "test_integer": 42,
+            "test_float": 3.14,
+            "test_bool": True,
+            "test_null": None,
+        }
+
+        # send message
+        self.assertTrue(sender.message_send(receiver.dht_id(), message))
+
+        # check received
+        received = receiver.message_list()
+        self.assertTrue(sender.dht_id() in received)
+        messages = received[sender.dht_id()]
+        self.assertTrue(len(messages) == 1)
+        self.assertEqual(messages[0], message)
 
     def test_send_to_void(self):
-        pass
+        sender = random.choice(self.swarm)
+        message = binascii.hexlify(os.urandom(64))
+        receiverid = binascii.hexlify(os.urandom(20))
+        self.assertFalse(sender.message_send(receiverid, message))
 
     def test_queue_full(self):
         pass
