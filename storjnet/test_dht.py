@@ -5,7 +5,7 @@ import pyjsonrpc
 
 
 # FIXME add to readme documentation
-SWARMSIZE = int(os.environ.get("STORJNET_SWARMSIZE", "50"))
+SWARMSIZE = int(os.environ.get("STORJNET_SWARMSIZE", "10"))
 USER_HOST = os.environ.get("STORJNET_USER_HOST", "127.0.0.1")
 USER_START_PORT = int(os.environ.get("STORJNET_USER_START_PORT", "5000"))
 
