@@ -31,7 +31,7 @@ digraph G {
         "DHT (Kademlia)" [fillcolor=green, shape=ellipse];
         "Topic Pub/Sub (Quasar)" [fillcolor=orange, shape=ellipse]; // enable publishing and subscribing to events
         "Data streams" [shape=ellipse]; // full duplex data transfer
-        "Messaging" [shape=green, shape=ellipse]; // to shortcut the pubsub after peer found
+        "Messaging" [fillcolor=green, shape=ellipse]; // to shortcut the pubsub after peer found
         "RPC"; // rpc calls and data transfer between clients
         "E2EE"; // End-to-end encryption
         "Bandwidth limiter";
