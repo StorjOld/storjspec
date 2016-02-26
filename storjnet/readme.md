@@ -54,8 +54,7 @@ FIXME reading/writing data is going to be fuck slow if everything has to be sign
 
 | Command               | Arguments                     | Returns       | Description                                           |
 |-----------------------|-------------------------------|---------------|-------------------------------------------------------|
-| quasar_filters        |                               | [filter]      | Paper: Algorithm 1 line 8                             |
-| quasar_update         | [filter]                      |               | Paper: Algorithm 1 line 12                            |
+| quasar_update         | attenuated_filter             |               | Paper: Algorithm 1 line 12                            |
 | quasar_notify         | topic, event, ttl, publishers |               | Paper: Algorithm 2 line 8, 21, 23                     |
 |                       |                               |               |                                                       |
 | kademlia_stun         |                               | [ip, port]    | TODO description                                      |
