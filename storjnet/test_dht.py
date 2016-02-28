@@ -209,7 +209,7 @@ class TestPubSubUserApi(unittest.TestCase):
         # check all peers received the event
         for peer in self.swarm:
             events = peer.pubsub_events("test_flood_topic")
-            self.assertEqual(events, ["test_flood_event"])
+            self.assertEqual(events, [event])
 
     def test_subscriptions(self):
         peer = random.choice(self.swarm)
