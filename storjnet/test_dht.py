@@ -1,4 +1,5 @@
 import os
+import time
 import binascii
 import random
 import unittest
@@ -176,6 +177,47 @@ class TestMessageUserApi(unittest.TestCase):
 
     def test_queue_full(self):
         pass
+
+
+class TestPubSubUserApi(unittest.TestCase):
+
+    def setUp(self):
+        self.swarm = []
+        for i in range(SWARMSIZE):
+            url = "http://{0}:{1}".format(USER_HOST, USER_START_PORT + i)
+            self.swarm.append(pyjsonrpc.HttpClient(url=url))
+
+    # TODO history checked
+
+    def test_flood(self):
+        # every node subscribes and should receive  the event
+
+        for peer in self.swarm:
+            peer.pubsub_subscribe("test_flood_topic")
+
+        # wait until subscriptions propagate
+        time.sleep(30)
+
+        # send event
+        peer = random.choice(self.swarm)
+        event = binascii.hexlify(os.urandom(32))
+        peer.pubsub_publish("test_flood_topic", event)
+
+        # wait until event propagates
+        time.sleep(5)
+
+        # check all peers received the event
+        for peer in self.swarm:
+            events = peer.pubsub_events("test_flood_topic")
+            self.assertEqual(events, ["test_flood_event"])
+
+    def test_subscriptions(self):
+        peer = random.choice(self.swarm)
+        self.assertNotIn("test_subscriptions", peer.pubsub_subscriptions())
+        peer.pubsub_subscribe("test_subscriptions")
+        self.assertIn("test_subscriptions", peer.pubsub_subscriptions())
+        peer.pubsub_unsubscribe("test_subscriptions")
+        self.assertNotIn("test_subscriptions", peer.pubsub_subscriptions())
 
 
 if __name__ == "__main__":
