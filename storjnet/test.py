@@ -11,6 +11,9 @@ USER_HOST = os.environ.get("STORJNET_USER_HOST", "127.0.0.1")
 USER_START_PORT = int(os.environ.get("STORJNET_USER_START_PORT", "5000"))
 
 
+SLEEP_TIME = 4
+
+
 # FIXME test if input is sanitized
 
 
@@ -200,14 +203,14 @@ class TestPubSubUserApi(unittest.TestCase):
         self.assertNotIn("test_subscriptions", peer.pubsub_subscriptions())
 
     def test_flood(self):
+
         # every node subscribes and should receive  the event
         topic = "test_flood_{0}".format(binascii.hexlify(os.urandom(32)))
-
         for peer in self.swarm:
             peer.pubsub_subscribe(topic)
 
         # wait until subscriptions propagate
-        time.sleep(5)
+        time.sleep(SLEEP_TIME)
 
         # send event
         peer = random.choice(self.swarm)
@@ -215,7 +218,7 @@ class TestPubSubUserApi(unittest.TestCase):
         peer.pubsub_publish(topic, event)
 
         # wait until event propagates
-        time.sleep(5)
+        time.sleep(SLEEP_TIME)
 
         # check all peers received the event
         for peer in self.swarm:
@@ -223,24 +226,27 @@ class TestPubSubUserApi(unittest.TestCase):
             self.assertEqual(events, [event])
 
     def test_multihop(self):
-        topic = "test_miltihop_{0}".format(binascii.hexlify(os.urandom(32)))
-        sender = self.swarm[0]
-        receiver = self.swarm[-1]
-        receiver.pubsub_subscribe(topic)
+        senders = self.swarm[:len(self.swarm)]
+        receivers = self.swarm[len(self.swarm):]
+        for sender, receiver in zip(senders, receivers):
 
-        # wait until subscriptions propagate
-        time.sleep(5)
+            # receiver subscribes to topic
+            topic = "test_miltihop_{0}".format(binascii.hexlify(os.urandom(32)))
+            receiver.pubsub_subscribe(topic)
 
-        # send event
-        event = binascii.hexlify(os.urandom(32))
-        sender.pubsub_publish(topic, event)
+            # wait until subscriptions propagate
+            time.sleep(SLEEP_TIME)
 
-        # wait until event propagates
-        time.sleep(5)
+            # send event
+            event = binascii.hexlify(os.urandom(32))
+            sender.pubsub_publish(topic, event)
 
-        # check all peers received the event
-        events = receiver.pubsub_events(topic)
-        self.assertEqual(events, [event])
+            # wait until event propagates
+            time.sleep(SLEEP_TIME)
+
+            # check all peers received the event
+            events = receiver.pubsub_events(topic)
+            self.assertEqual(events, [event])
 
 
 if __name__ == "__main__":

@@ -48,7 +48,7 @@ setup: virtualenv
 
 
 test_storjnet: setup
-	$(PY) storjnet/test_dht.py --verbose
+	$(PY) storjnet/test.py --verbose
 
 
 test_storjlib_store: setup
