@@ -187,29 +187,9 @@ class TestPubSubUserApi(unittest.TestCase):
             url = "http://{0}:{1}".format(USER_HOST, USER_START_PORT + i)
             self.swarm.append(pyjsonrpc.HttpClient(url=url))
 
+    # TODO test json event
     # TODO history checked
-
-    def test_flood(self):
-        # every node subscribes and should receive  the event
-
-        for peer in self.swarm:
-            peer.pubsub_subscribe("test_flood_topic")
-
-        # wait until subscriptions propagate
-        time.sleep(30)
-
-        # send event
-        peer = random.choice(self.swarm)
-        event = binascii.hexlify(os.urandom(32))
-        peer.pubsub_publish("test_flood_topic", event)
-
-        # wait until event propagates
-        time.sleep(5)
-
-        # check all peers received the event
-        for peer in self.swarm:
-            events = peer.pubsub_events("test_flood_topic")
-            self.assertEqual(events, [event])
+    # TODO test queue full
 
     def test_subscriptions(self):
         peer = random.choice(self.swarm)
@@ -218,6 +198,49 @@ class TestPubSubUserApi(unittest.TestCase):
         self.assertIn("test_subscriptions", peer.pubsub_subscriptions())
         peer.pubsub_unsubscribe("test_subscriptions")
         self.assertNotIn("test_subscriptions", peer.pubsub_subscriptions())
+
+    def test_flood(self):
+        # every node subscribes and should receive  the event
+        topic = "test_flood_{0}".format(binascii.hexlify(os.urandom(32)))
+
+        for peer in self.swarm:
+            peer.pubsub_subscribe(topic)
+
+        # wait until subscriptions propagate
+        time.sleep(5)
+
+        # send event
+        peer = random.choice(self.swarm)
+        event = binascii.hexlify(os.urandom(32))
+        peer.pubsub_publish(topic, event)
+
+        # wait until event propagates
+        time.sleep(5)
+
+        # check all peers received the event
+        for peer in self.swarm:
+            events = peer.pubsub_events(topic)
+            self.assertEqual(events, [event])
+
+    def test_multihop(self):
+        topic = "test_miltihop_{0}".format(binascii.hexlify(os.urandom(32)))
+        sender = self.swarm[0]
+        receiver = self.swarm[-1]
+        receiver.pubsub_subscribe(topic)
+
+        # wait until subscriptions propagate
+        time.sleep(5)
+
+        # send event
+        event = binascii.hexlify(os.urandom(32))
+        sender.pubsub_publish(topic, event)
+
+        # wait until event propagates
+        time.sleep(5)
+
+        # check all peers received the event
+        events = receiver.pubsub_events(topic)
+        self.assertEqual(events, [event])
 
 
 if __name__ == "__main__":
