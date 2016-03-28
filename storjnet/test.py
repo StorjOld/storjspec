@@ -346,17 +346,23 @@ class TestStreamUserApi(unittest.TestCase):
         alice_streams = alice.stream_list()
         self.assertEqual(len(alice_streams), 3)
         self.assertIn(alpha_hexstreamid, alice_streams)
+        self.assertEqual(alice_streams[alpha_hexstreamid][0], bob.dht_id())
         self.assertIn(beta_hexstreamid, alice_streams)
+        self.assertEqual(alice_streams[beta_hexstreamid][0], bob.dht_id())
         self.assertIn(gamma_hexstreamid, alice_streams)
+        self.assertEqual(alice_streams[gamma_hexstreamid][0], charlie.dht_id())
 
         bob_streams = bob.stream_list()
         self.assertEqual(len(bob_streams), 2)
         self.assertIn(alpha_hexstreamid, bob_streams)
+        self.assertEqual(bob_streams[alpha_hexstreamid][0], alice.dht_id())
         self.assertIn(beta_hexstreamid, bob_streams)
+        self.assertEqual(bob_streams[beta_hexstreamid][0], alice.dht_id())
 
         charlie_streams = charlie.stream_list()
         self.assertEqual(len(charlie_streams), 1)
         self.assertIn(gamma_hexstreamid, charlie_streams)
+        self.assertEqual(charlie_streams[gamma_hexstreamid][0], alice.dht_id())
 
 
 if __name__ == "__main__":
