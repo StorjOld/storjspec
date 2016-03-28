@@ -324,6 +324,40 @@ class TestStreamUserApi(unittest.TestCase):
     # TODO test both can open
     # TODO test both can close
 
+    def test_list(self):
+
+        random.shuffle(self.swarm)
+        alice = self.swarm[0]
+        bob = self.swarm[1]
+        charlie = self.swarm[2]
+
+        # alice -> bob
+        alpha_hexstreamid = alice.stream_open(bob.dht_id())
+        self.assertIsNotNone(alpha_hexstreamid)
+
+        # alice -> bob
+        beta_hexstreamid = alice.stream_open(bob.dht_id())
+        self.assertIsNotNone(beta_hexstreamid)
+
+        # charlie -> alice
+        gamma_hexstreamid = charlie.stream_open(alice.dht_id())
+        self.assertIsNotNone(gamma_hexstreamid)
+
+        alice_streams = alice.stream_list()
+        self.assertEqual(len(alice_streams), 3)
+        self.assertIn(alpha_hexstreamid, alice_streams)
+        self.assertIn(beta_hexstreamid, alice_streams)
+        self.assertIn(gamma_hexstreamid, alice_streams)
+
+        bob_streams = bob.stream_list()
+        self.assertEqual(len(bob_streams), 2)
+        self.assertIn(alpha_hexstreamid, bob_streams)
+        self.assertIn(beta_hexstreamid, bob_streams)
+
+        charlie_streams = charlie.stream_list()
+        self.assertEqual(len(charlie_streams), 1)
+        self.assertIn(gamma_hexstreamid, charlie_streams)
+
 
 if __name__ == "__main__":
     unittest.main()
