@@ -92,10 +92,9 @@ class TestMessageUserApi(unittest.TestCase):
             self.swarm.append(pyjsonrpc.HttpClient(url=url))
 
     def test_send_receive(self):
+        random.shuffle(self.swarm)
         senders = self.swarm[:len(self.swarm)/2]
         receivers = self.swarm[len(self.swarm)/2:]
-        random.shuffle(senders)
-        random.shuffle(receivers)
         for sender, receiver in zip(senders, receivers):
             message = binascii.hexlify(os.urandom(64))
 
@@ -116,6 +115,7 @@ class TestMessageUserApi(unittest.TestCase):
             self.assertFalse(bool(receiver.message_list()))
 
     def test_ordering(self):
+        random.shuffle(self.swarm)
         sender = self.swarm[0]
         receiver = self.swarm[-1]
 
@@ -151,6 +151,7 @@ class TestMessageUserApi(unittest.TestCase):
         self.assertEqual(messages[0], message)
 
     def test_json(self):
+        random.shuffle(self.swarm)
         sender = self.swarm[0]
         receiver = self.swarm[-1]
         message = {
@@ -226,6 +227,7 @@ class TestPubSubUserApi(unittest.TestCase):
             self.assertEqual(events, [event])
 
     def test_multihop(self):
+        random.shuffle(self.swarm)
         senders = self.swarm[:len(self.swarm)]
         receivers = self.swarm[len(self.swarm):]
         for sender, receiver in zip(senders, receivers):
@@ -247,6 +249,120 @@ class TestPubSubUserApi(unittest.TestCase):
             # check all peers received the event
             events = receiver.pubsub_events(topic)
             self.assertEqual(events, [event])
+
+
+class TestStreamUserApi(unittest.TestCase):
+
+    def setUp(self):
+        self.swarm = []
+        for i in range(SWARMSIZE):
+            url = "http://{0}:{1}".format(USER_HOST, USER_START_PORT + i)
+            self.swarm.append(pyjsonrpc.HttpClient(url=url))
+
+    def test_open(self):
+        random.shuffle(self.swarm)
+        alice = self.swarm[0]
+        bob = self.swarm[-1]
+        streamid = alice.stream_open(bob.dht_id())
+        self.assertIsNotNone(streamid)
+
+    def test_io(self):
+        random.shuffle(self.swarm)
+        alice = self.swarm[0]
+        bob = self.swarm[-1]
+
+        # open stream
+        hexstreamid = alice.stream_open(bob.dht_id())
+        self.assertIsNotNone(hexstreamid)
+
+        # write alice to bob
+        alice_hexdata = binascii.hexlify(os.urandom(32))
+        bytes_written = alice.stream_write(hexstreamid, alice_hexdata)
+        self.assertEqual(bytes_written, 32)
+
+        # write bob to alice
+        bob_hexdata = binascii.hexlify(os.urandom(32))
+        bytes_written = bob.stream_write(hexstreamid, bob_hexdata)
+        self.assertEqual(bytes_written, 32)
+
+        # read alice from bob
+        read_data = alice.stream_read(hexstreamid)
+        self.assertEqual(read_data, bob_hexdata)
+
+        # read bob from alice
+        read_data = bob.stream_read(hexstreamid)
+        self.assertEqual(read_data, alice_hexdata)
+
+    def test_close(self):
+        random.shuffle(self.swarm)
+        alice = self.swarm[0]
+        bob = self.swarm[-1]
+
+        # open stream
+        hexstreamid = alice.stream_open(bob.dht_id())
+        self.assertIsNotNone(hexstreamid)
+
+        # transfer works before
+        written_hexdata = binascii.hexlify(os.urandom(32))
+        bytes_written = alice.stream_write(hexstreamid, written_hexdata)
+        self.assertEqual(bytes_written, 32)
+        read_hexdata = bob.stream_read(hexstreamid)
+        self.assertEqual(read_hexdata, written_hexdata)
+
+        # test close
+        self.assertTrue(alice.stream_close(hexstreamid))
+
+        # write fails on closed stream
+        written_hexdata = binascii.hexlify(os.urandom(32))
+        bytes_written = alice.stream_write(hexstreamid, written_hexdata)
+        self.assertEqual(bytes_written, None)
+
+        # read fails on closed stream
+        read_hexdata = bob.stream_read(hexstreamid)
+        self.assertEqual(read_hexdata, None)
+
+    # TODO test both can open
+    # TODO test both can close
+
+    def test_list(self):
+
+        random.shuffle(self.swarm)
+        alice = self.swarm[0]
+        bob = self.swarm[1]
+        charlie = self.swarm[2]
+
+        # alice -> bob
+        alpha_hexstreamid = alice.stream_open(bob.dht_id())
+        self.assertIsNotNone(alpha_hexstreamid)
+
+        # alice -> bob
+        beta_hexstreamid = alice.stream_open(bob.dht_id())
+        self.assertIsNotNone(beta_hexstreamid)
+
+        # charlie -> alice
+        gamma_hexstreamid = charlie.stream_open(alice.dht_id())
+        self.assertIsNotNone(gamma_hexstreamid)
+
+        alice_streams = alice.stream_list()
+        self.assertEqual(len(alice_streams), 3)
+        self.assertIn(alpha_hexstreamid, alice_streams)
+        self.assertEqual(alice_streams[alpha_hexstreamid][0], bob.dht_id())
+        self.assertIn(beta_hexstreamid, alice_streams)
+        self.assertEqual(alice_streams[beta_hexstreamid][0], bob.dht_id())
+        self.assertIn(gamma_hexstreamid, alice_streams)
+        self.assertEqual(alice_streams[gamma_hexstreamid][0], charlie.dht_id())
+
+        bob_streams = bob.stream_list()
+        self.assertEqual(len(bob_streams), 2)
+        self.assertIn(alpha_hexstreamid, bob_streams)
+        self.assertEqual(bob_streams[alpha_hexstreamid][0], alice.dht_id())
+        self.assertIn(beta_hexstreamid, bob_streams)
+        self.assertEqual(bob_streams[beta_hexstreamid][0], alice.dht_id())
+
+        charlie_streams = charlie.stream_list()
+        self.assertEqual(len(charlie_streams), 1)
+        self.assertIn(gamma_hexstreamid, charlie_streams)
+        self.assertEqual(charlie_streams[gamma_hexstreamid][0], alice.dht_id())
 
 
 if __name__ == "__main__":
