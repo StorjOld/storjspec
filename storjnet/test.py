@@ -266,10 +266,12 @@ class TestStreamUserApi(unittest.TestCase):
         streamid = alice.stream_open(bob.dht_id())
         self.assertIsNotNone(streamid)
 
+    # TODO test both can open
+
     def test_io(self):
         random.shuffle(self.swarm)
         alice = self.swarm[0]
-        bob = self.swarm[-1]
+        bob = self.swarm[1]
 
         # open stream
         hexstreamid = alice.stream_open(bob.dht_id())
@@ -296,7 +298,7 @@ class TestStreamUserApi(unittest.TestCase):
     def test_close(self):
         random.shuffle(self.swarm)
         alice = self.swarm[0]
-        bob = self.swarm[-1]
+        bob = self.swarm[1]
 
         # open stream
         hexstreamid = alice.stream_open(bob.dht_id())
@@ -321,7 +323,6 @@ class TestStreamUserApi(unittest.TestCase):
         read_hexdata = bob.stream_read(hexstreamid)
         self.assertEqual(read_hexdata, None)
 
-    # TODO test both can open
     # TODO test both can close
 
     def test_list(self):
@@ -363,6 +364,29 @@ class TestStreamUserApi(unittest.TestCase):
         self.assertEqual(len(charlie_streams), 1)
         self.assertIn(gamma_hexstreamid, charlie_streams)
         self.assertEqual(charlie_streams[gamma_hexstreamid][0], alice.dht_id())
+
+
+class TestStreamUserApiErrors(unittest.TestCase):
+
+    def setUp(self):
+        self.swarm = []
+        for i in range(SWARMSIZE):
+            url = "http://{0}:{1}".format(USER_HOST, USER_START_PORT + i)
+            self.swarm.append(pyjsonrpc.HttpClient(url=url))
+
+    def test_wrong_streamid(self):
+        random.shuffle(self.swarm)
+        alice = self.swarm[0]
+
+        hexdata = binascii.hexlify(os.urandom(32))
+        wrongstreamid = binascii.hexlify(os.urandom(32))
+
+        # write wrong streamid
+        bytes_written = alice.stream_write(wrongstreamid, hexdata)
+        self.assertEqual(bytes_written, None)
+
+        # close wrong streamid
+        self.assertFalse(alice.stream_close(wrongstreamid))
 
 
 if __name__ == "__main__":
