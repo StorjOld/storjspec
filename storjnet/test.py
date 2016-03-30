@@ -1,6 +1,7 @@
 import os
 import time
 import binascii
+import hashlib
 import random
 import unittest
 import pyjsonrpc
@@ -263,8 +264,13 @@ class TestStreamUserApi(unittest.TestCase):
         random.shuffle(self.swarm)
         alice = self.swarm[0]
         bob = self.swarm[-1]
-        streamid = alice.stream_open(bob.dht_id())
-        self.assertIsNotNone(streamid)
+
+        # open straem
+        hexstreamid = alice.stream_open(bob.dht_id())
+        self.assertIsNotNone(hexstreamid)
+
+        # close stream
+        self.assertTrue(alice.stream_close(hexstreamid))
 
     # TODO test both can open
 
@@ -295,6 +301,41 @@ class TestStreamUserApi(unittest.TestCase):
         read_data = bob.stream_read(hexstreamid)
         self.assertEqual(read_data, alice_hexdata)
 
+        # close stream
+        self.assertTrue(alice.stream_close(hexstreamid))
+
+    def test_data_transfer(self):
+
+        # open stream
+        random.shuffle(self.swarm)
+        alice = self.swarm[0]
+        bob = self.swarm[1]
+        hexstreamid = alice.stream_open(bob.dht_id())
+        self.assertIsNotNone(hexstreamid)
+
+        # send 1M
+        sent = hashlib.sha256()
+        for chunk in [os.urandom(1024) for i in range(1024)]:
+            hexdata = binascii.hexlify(chunk)
+            bytes_written = alice.stream_write(hexstreamid, hexdata)
+            self.assertEqual(bytes_written, 1024)
+            sent.update(hexdata)
+        sent_digest = sent.hexdigest()
+
+        # receive 1M
+        received = hashlib.sha256()
+        while True:
+            hexdata = bob.stream_read(hexstreamid, size=1024)
+            if not hexdata:
+                break
+            received.update(hexdata)
+        received_digetst = received.hexdigest()
+
+        self.assertEqual(sent_digest, received_digetst)
+
+        # close stream
+        self.assertTrue(alice.stream_close(hexstreamid))
+
     def test_close(self):
         random.shuffle(self.swarm)
         alice = self.swarm[0]
@@ -324,7 +365,6 @@ class TestStreamUserApi(unittest.TestCase):
         self.assertEqual(read_hexdata, None)
 
     # TODO test both can close
-    # TODO test transfer larger amount of data
 
     def test_list(self):
 
@@ -365,6 +405,11 @@ class TestStreamUserApi(unittest.TestCase):
         self.assertEqual(len(charlie_streams), 1)
         self.assertIn(gamma_hexstreamid, charlie_streams)
         self.assertEqual(charlie_streams[gamma_hexstreamid][0], alice.dht_id())
+
+        # close streams
+        self.assertTrue(alice.stream_close(alpha_hexstreamid))
+        self.assertTrue(alice.stream_close(beta_hexstreamid))
+        self.assertTrue(alice.stream_close(gamma_hexstreamid))
 
 
 class TestStreamUserApiErrors(unittest.TestCase):
