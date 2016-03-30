@@ -180,7 +180,7 @@ class TestMessageUserApi(unittest.TestCase):
         self.assertFalse(sender.message_send(receiverid, message))
 
     def test_queue_full(self):
-        pass
+        pass  # TODO implement
 
 
 class TestPubSubUserApi(unittest.TestCase):
@@ -228,8 +228,8 @@ class TestPubSubUserApi(unittest.TestCase):
 
     def test_multihop(self):
         random.shuffle(self.swarm)
-        senders = self.swarm[:len(self.swarm)]
-        receivers = self.swarm[len(self.swarm):]
+        senders = self.swarm[:len(self.swarm) / 2]
+        receivers = self.swarm[len(self.swarm) / 2:]
         for sender, receiver in zip(senders, receivers):
 
             # receiver subscribes to topic
@@ -324,6 +324,7 @@ class TestStreamUserApi(unittest.TestCase):
         self.assertEqual(read_hexdata, None)
 
     # TODO test both can close
+    # TODO test transfer larger amount of data
 
     def test_list(self):
 
@@ -387,6 +388,15 @@ class TestStreamUserApiErrors(unittest.TestCase):
 
         # close wrong streamid
         self.assertFalse(alice.stream_close(wrongstreamid))
+
+    def test_open_offline(self):
+        random.shuffle(self.swarm)
+        alice = self.swarm[0]
+        randomid = binascii.hexlify(os.urandom(20))
+        streamid = alice.stream_open(randomid)
+        self.assertIsNone(streamid)
+
+    # TODO test max streams
 
 
 if __name__ == "__main__":
