@@ -385,26 +385,37 @@ class TestStreamUserApi(unittest.TestCase):
         gamma_hexstreamid = charlie.stream_open(alice.dht_id())
         self.assertIsNotNone(gamma_hexstreamid)
 
+        # write testdata to check listed readable bytes
+        hexdata = binascii.hexlify(os.urandom(32))
+        bytes_written = alice.stream_write(beta_hexstreamid, hexdata)
+        self.assertEqual(bytes_written, 32)
+
         alice_streams = alice.stream_list()
         self.assertEqual(len(alice_streams), 3)
         self.assertIn(alpha_hexstreamid, alice_streams)
         self.assertEqual(alice_streams[alpha_hexstreamid][0], bob.dht_id())
+        self.assertEqual(alice_streams[alpha_hexstreamid][1], 0)
         self.assertIn(beta_hexstreamid, alice_streams)
         self.assertEqual(alice_streams[beta_hexstreamid][0], bob.dht_id())
+        self.assertEqual(alice_streams[beta_hexstreamid][1], 0)
         self.assertIn(gamma_hexstreamid, alice_streams)
         self.assertEqual(alice_streams[gamma_hexstreamid][0], charlie.dht_id())
+        self.assertEqual(alice_streams[gamma_hexstreamid][1], 0)
 
         bob_streams = bob.stream_list()
         self.assertEqual(len(bob_streams), 2)
         self.assertIn(alpha_hexstreamid, bob_streams)
         self.assertEqual(bob_streams[alpha_hexstreamid][0], alice.dht_id())
+        self.assertEqual(bob_streams[alpha_hexstreamid][1], 0)
         self.assertIn(beta_hexstreamid, bob_streams)
         self.assertEqual(bob_streams[beta_hexstreamid][0], alice.dht_id())
+        self.assertEqual(bob_streams[beta_hexstreamid][1], 32)
 
         charlie_streams = charlie.stream_list()
         self.assertEqual(len(charlie_streams), 1)
         self.assertIn(gamma_hexstreamid, charlie_streams)
         self.assertEqual(charlie_streams[gamma_hexstreamid][0], alice.dht_id())
+        self.assertEqual(charlie_streams[gamma_hexstreamid][1], 0)
 
         # close streams
         self.assertTrue(alice.stream_close(alpha_hexstreamid))

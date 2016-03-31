@@ -39,7 +39,7 @@ Algorithms:
 | stream_open           | hexnodeid,            | streamid                      | Open a datastream with a node.                       |
 | stream_close          | streamid              |                               | Close a datastream with a node.                      |
 | stream_read           | streamid, size        | data                          | Read from a datastream with a node.                  |
-| stream_write          | streamid, data        |                               | Write to a datastream with a node.                   |
+| stream_write          | streamid, data        | bytes_written                 | Write to a datastream with a node.                   |
 
 
 ## Network RPC calls
