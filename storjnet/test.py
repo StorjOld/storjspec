@@ -315,7 +315,7 @@ class TestStreamUserApi(unittest.TestCase):
 
         # send 1M
         sent = hashlib.sha256()
-        for chunk in [os.urandom(1024) for i in range(1024)]:
+        for chunk in [os.urandom(1024) for i in range(512)]:
             hexdata = binascii.hexlify(chunk)
             bytes_written = alice.stream_write(hexstreamid, hexdata)
             self.assertEqual(bytes_written, 1024)
