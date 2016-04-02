@@ -31,12 +31,14 @@ digraph G {
         "DHT (Kademlia)" [fillcolor=green, shape=ellipse];
         "Topic Pub/Sub (Quasar)" [fillcolor=green, shape=ellipse]; // enable publishing and subscribing to events
         "Data streams" [fillcolor=green, shape=ellipse]; // full duplex data transfer
+        "File transfer";
         "Messaging" [fillcolor=green, shape=ellipse]; // to shortcut the pubsub after peer found
         "RPC" [fillcolor=orange, shape=hexagon]; // rpc calls and data transfer between clients
         "E2EE"; // End-to-end encryption
         "Bandwidth limiter";
         "REST (SIP 002)"; // put/get shards
     };
+    "File transfer" -> "Data streams";
     "DHT (Kademlia)" -> "RPC";
     "Topic Pub/Sub (Quasar)" -> "RPC";
     "Messaging" -> "RPC";
@@ -55,6 +57,9 @@ digraph G {
         color=lightgoldenrod;
 
         "Contract" [fillcolor=orange, shape=hexagon]; // terms of a storage contract between peers
+        "AuditDaemon";
+        "PaymentDaemon";
+        "ContractManager";
         "Audit" [fillcolor=yellow, shape=ellipse]; // track state of a contract over time
         "Store" [fillcolor=orange, shape=hexagon];
         "Heartbeat" [fillcolor=yellow, shape=ellipse];
@@ -62,7 +67,14 @@ digraph G {
         "Graylist (SIP 004)";
         "CHISQRDTEST (SIP 003)";
         "Content Pub/Sub" [shape=hexagon]; // enable publishing and subscribing to events
+        "Wallet" [fillcolor=orange, shape=hexagon];
     };
+    "PaymentDaemon" -> "ContractManager";
+    "PaymentDaemon" -> "Contract";
+    "PaymentDaemon" -> "Wallet";
+    "AuditDaemon" -> "ContractManager";
+    "AuditDaemon" -> "Contract";
+    "ContractManager" -> "Database";
     "Content Pub/Sub" -> "Topic Pub/Sub (Quasar)";
     "Audit" -> "Contract"; // when/how to perform the audit
     "Audit" -> "Store"; // perform audit challange
@@ -75,30 +87,9 @@ digraph G {
     "Store" -> "Database";
     "Ledger (SIP 001)" -> "Blockchain";
     "Graylist (SIP 004)" -> "CHISQRDTEST (SIP 003)";
-    "CHISQRDTEST (SIP 003)" -> "Data streams";
+    "CHISQRDTEST (SIP 003)" -> "File transfer";
     "CHISQRDTEST (SIP 003)" -> "REST (SIP 002)";
-
-    // STORJNODE
-    subgraph cluster_3 {
-        label = "Storjnode";
-        style=filled;
-        color=lightseagreen;
-
-        "Roy"; // for sending/receiving of funds for services used 
-        "Wallet" [fillcolor=orange, shape=hexagon];
-        "Contract manager"; // Store contracts
-    };
-    "Roy" -> "Contract manager";
-    "Contract manager" -> "Database";
     "Wallet" -> "Blockchain";
-    "Roy" -> "Content Pub/Sub"; // ask/bid on contracts
-    "Roy" -> "Messaging";
-    "Roy" -> "Audit"; // perform audits
-    "Roy" -> "Contract"; // verify agreed to use/provide a service
-    "Roy" -> "Heartbeat";
-    "Roy" -> "Ledger (SIP 001)"; // verify service was used/provided
-    "Roy" -> "Wallet"; // transfer funds
-    "Roy" -> "Store";
 
     // EXTERNAL
     "File system" [fillcolor=green, shape=ellipse];
