@@ -32,23 +32,21 @@ digraph G {
         "Topic Pub/Sub (Quasar)" [fillcolor=green, shape=ellipse]; // enable publishing and subscribing to events
         "Data streams" [fillcolor=green, shape=ellipse]; // full duplex data transfer
         "File transfer";
+        "Content Pub/Sub" [shape=box]; // enable publishing and subscribing to events
         "Messaging" [fillcolor=green, shape=ellipse]; // to shortcut the pubsub after peer found
-        "RPC" [fillcolor=orange, shape=hexagon]; // rpc calls and data transfer between clients
-        "E2EE"; // End-to-end encryption
+        "RPC" [fillcolor=yellow, shape=ellipse]; // rpc calls and data transfer between clients
+        "Secure transport";
         "Bandwidth limiter";
-        "REST (SIP 002)"; // put/get shards
+        "UPnP/NAT-PMP";
     };
+    "UPnP/NAT-PMP" -> "Secure transport";
     "File transfer" -> "Data streams";
     "DHT (Kademlia)" -> "RPC";
     "Topic Pub/Sub (Quasar)" -> "RPC";
     "Messaging" -> "RPC";
     "Data streams" -> "RPC";
-    "RPC" -> "Bandwidth limiter";
-    "REST (SIP 002)" -> "Bandwidth limiter";
-    "Bandwidth limiter" -> "E2EE";
-    "E2EE" -> "Crypto";
-    "E2EE" -> "Transport";
-    "Bandwidth limiter" -> "Database";
+    "RPC" -> "Secure transport";
+    "Bandwidth limiter" -> "Secure transport";
 
     // STORJLIB
     subgraph cluster_2 {
@@ -56,45 +54,50 @@ digraph G {
         style=filled;
         color=lightgoldenrod;
 
-        "Contract" [fillcolor=orange, shape=hexagon]; // terms of a storage contract between peers
-        "AuditDaemon";
-        "PaymentDaemon";
+        "Contract" [fillcolor=green, shape=ellipse];
+        "AuditDaemon" [shape=ellipse];
+        "PaymentDaemon" [shape=ellipse];
+        "TelemetryDaemon" [shape=ellipse];
         "ContractManager";
-        "Audit" [fillcolor=yellow, shape=ellipse]; // track state of a contract over time
-        "Store" [fillcolor=orange, shape=hexagon];
-        "Heartbeat" [fillcolor=yellow, shape=ellipse];
-        "Ledger (SIP 001)" [shape=hexagon];
-        "Graylist (SIP 004)";
-        "CHISQRDTEST (SIP 003)";
-        "Content Pub/Sub" [shape=hexagon]; // enable publishing and subscribing to events
-        "Wallet" [fillcolor=orange, shape=hexagon];
+        "Audit" [fillcolor=green, shape=ellipse];
+        "Store" [fillcolor=yellow, shape=hexagon];
+        "Heartbeat" [fillcolor=green, shape=ellipse];
+        "Wallet" [fillcolor=orange, shape=box];
     };
     "PaymentDaemon" -> "ContractManager";
     "PaymentDaemon" -> "Contract";
     "PaymentDaemon" -> "Wallet";
     "AuditDaemon" -> "ContractManager";
     "AuditDaemon" -> "Contract";
-    "ContractManager" -> "Database";
+    "AuditDaemon" -> "Audit";
+    "ContractManager" -> "Contract";
     "Content Pub/Sub" -> "Topic Pub/Sub (Quasar)";
     "Audit" -> "Contract"; // when/how to perform the audit
     "Audit" -> "Store"; // perform audit challange
-    "Audit" -> "Ledger (SIP 001)"; // save result in ledger
+    "Audit" -> "Ledger (SIP 001)" [style=dotted]; // save result in ledger
     "Heartbeat" -> "Contract";
     "Heartbeat" -> "Store"; // perform heartbeat challange
-    "Heartbeat" -> "Ledger (SIP 001)"; // save result in ledger
-    "Store" -> "File system";
-    "Store" -> "Graylist (SIP 004)";
-    "Store" -> "Database";
-    "Ledger (SIP 001)" -> "Blockchain";
-    "Graylist (SIP 004)" -> "CHISQRDTEST (SIP 003)";
-    "CHISQRDTEST (SIP 003)" -> "File transfer";
-    "CHISQRDTEST (SIP 003)" -> "REST (SIP 002)";
-    "Wallet" -> "Blockchain";
+    "Heartbeat" -> "Ledger (SIP 001)" [style=dotted]; // save result in ledger
+    "Store" -> "File transfer";
+    "Store" -> "Graylist (SIP 004)" [style=dotted];
+    "Graylist (SIP 004)" -> "CHISQRDTEST (SIP 003)" [style=dotted];
+    "CHISQRDTEST (SIP 003)" -> "File transfer" [style=dotted];
+    "CHISQRDTEST (SIP 003)" -> "REST (SIP 002)" [style=dotted];
+    "TelemetryDaemon" -> "Metadisk";
+    "TelemetryDaemon" -> "Store";
+
+    // SIP
+    subgraph cluster_3 {
+        label = "SIP Proposals";
+        style=filled;
+        color=wheat;
+
+        "REST (SIP 002)"; // put/get shards
+        "Ledger (SIP 001)";
+        "Graylist (SIP 004)";
+        "CHISQRDTEST (SIP 003)";
+    };
 
     // EXTERNAL
-    "File system" [fillcolor=green, shape=ellipse];
-    "Crypto" [fillcolor=green, shape=ellipse];
-    "Database" [fillcolor=green, shape=ellipse];
-    "Blockchain" [fillcolor=green, shape=ellipse];
-    "Transport" [fillcolor=green, shape=ellipse];
+    "Metadisk" [fillcolor=yellow, shape=ellipse];
 }
