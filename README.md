@@ -8,6 +8,11 @@ storj application. It consists of three main components:
  * [storjlib](storjlib): Responsible for storage contracts, auditing and heartbeat terms.
 
 
+### Storj module stack
+
+![modules](modules.png)
+
+
 ### Dependency graph and progress status
 
 ![status](status.png)

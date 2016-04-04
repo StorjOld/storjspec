@@ -70,3 +70,4 @@ test: test_storjnet test_storjlib
 graphs:
 	dot -Tpng status.dot -o status.png
 	dot -Tpng storjlib/challenge/scheme.dot -o storjlib/challenge/scheme.png
+	ditaa modules.ditaa modules.png

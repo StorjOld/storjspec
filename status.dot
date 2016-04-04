@@ -56,6 +56,7 @@ digraph G {
 
         "Contract" [fillcolor=green, shape=ellipse];
         "AuditDaemon" [shape=ellipse];
+        "HeatbeatDaemon" [shape=ellipse];
         "PaymentDaemon" [shape=ellipse];
         "TelemetryDaemon" [shape=ellipse];
         "ContractManager";
@@ -70,6 +71,9 @@ digraph G {
     "AuditDaemon" -> "ContractManager";
     "AuditDaemon" -> "Contract";
     "AuditDaemon" -> "Audit";
+    "HeatbeatDaemon" -> "ContractManager";
+    "HeatbeatDaemon" -> "Contract";
+    "HeatbeatDaemon" -> "Audit";
     "ContractManager" -> "Contract";
     "Content Pub/Sub" -> "Topic Pub/Sub (Quasar)";
     "Audit" -> "Contract"; // when/how to perform the audit
