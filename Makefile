@@ -71,3 +71,4 @@ graphs:
 	dot -Tpng status.dot -o status.png
 	dot -Tpng storjlib/challenge/scheme.dot -o storjlib/challenge/scheme.png
 	ditaa modules.ditaa modules.png
+	ditaa storjlib/micropayments.ditaa storjlib/micropayments.png
