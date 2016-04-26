@@ -1,8 +1,4 @@
 
-                            Bidirectional trustless micropayent
-                            channel with only two transactions.
-
-
 
 
                     Alice utxo 0--------+   +--------Bob utxo 0
@@ -88,10 +84,4 @@ Alice<-------------------------------+OR|   |OR+------------------------------->
                          \---|  Counterparty prevents  |---/
                              | spending revoked commit |
                              \------------=------------/
-
-
-
-
-
-
 

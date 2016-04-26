@@ -12,6 +12,9 @@ For more information on the underlying mechinisms see:
  * [Lightning Network](https://lightning.network/lightning-network-paper.pdf)
 
 
+## Bidirectional trustless micropayent channels
+
+
 ![micropayment channel diagram](micropayments.png)
 
 
