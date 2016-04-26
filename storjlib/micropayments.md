@@ -1,4 +1,4 @@
-# Simple bidirectional trustless micropayent channels.
+# Bidirectional trustless micropayent channels
 
 This is based on the worked previously done by the lightning network
 developers. It is a simplified, less feature rich and should still meet all
@@ -11,36 +11,32 @@ For more information on the underlying mechinisms see:
  * [Deployable Lightning](https://github.com/ElementsProject/lightning/blob/master/doc/deployable-lightning.pdf)
  * [Lightning Network](https://lightning.network/lightning-network-paper.pdf)
 
-
-## Bidirectional trustless micropayent channels
-
-
 ![micropayment channel diagram](micropayments.png)
 
 
-## Scripts
+## Anchor
 
-Scripts currently untested and most likely contain bugs!
-
-### Anchor output script
+Script:
 
     IF
-        2 <OWNER_PUBKEY> <COUNTERPARTY_PUBKEY> 2 OP_CHECKMULTISIGVERIFY
+        2 <owner_pubkey> <counterparty_pubkey> 2 OP_CHECKMULTISIGVERIFY
     ELSE
-        <EXPIRE_TIME> OP_CHECKSEQUENCEVERIFY OP_DROP
-        <RECOVER_PUBKEY> OP_CHECKSIGVERIFY
+        <expire_time> OP_CHECKSEQUENCEVERIFY OP_DROP
+        <recover_pubkey> OP_CHECKSIGVERIFY
     ENDIF
 
 
-### Commit counterparty output
+## Commit
 
-    <OWNER_PUBKEY> OP_CHECKSIG
-
-
-### Commit owner output script
+Owner output script:
 
     IF
-        <DELAY> OP_CHECKSEQUENCEVERIFY OP_DROP <OWNER_PUBKEY> OP_CHECKSIG
+        <delay> OP_CHECKSEQUENCEVERIFY OP_DROP <owner_pubkey> OP_CHECKSIG
     ELSE
-        TODO revocation
+        OP_HASH160 <revocation_secret_hash> OP_EQUALVERIFY
+        OP_DROP <counterparty_pubkey> OP_CHECKSIG
     ENDIF
+
+Counterparty output script
+
+    <owner_pubkey> OP_CHECKSIG
