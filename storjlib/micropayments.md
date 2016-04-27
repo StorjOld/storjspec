@@ -51,9 +51,20 @@ Bob output script:
 
 ## Commit transaction
 
-This allows the owner to publish its latest commit transaction at any time
-and spend the funds after a delay, but also ensures that if the owner relays
-a revoked transaction, the counterparty has the delay time to claim the funds.
+Using the outputs of the anchor transacton both parties periodically
+renegotiate a pair of symmetrical commit transactions that can be used to
+close the payment channel. Both use the same inputs and transfer the same
+amount to each party.
+
+Whenever a new pair of commit transactions is negotiated, both parties
+publish their revocation secret for the previous commit transaction. This
+prevents the spending of the previous commit transactions.
+
+Two commit transactions are required as both revocation secrets cannot be
+published atomically at once. Publishing any one of the commit transactions
+will close the payment channel. If both are published, it is a double spend
+and only one will be accepted.
+
 
 ### Alice commit transaction
 
@@ -72,7 +83,12 @@ Bob output script
 
     <bob pubkey> OP_CHECKSIG
 
+
 ### Bob commit transaction
+
+Alice output script
+
+    <alice pubkey> OP_CHECKSIG
 
 Bob output script:
 
@@ -84,8 +100,4 @@ Bob output script:
         <bob pubkey>
     OP_ENDIF
     OP_CHECKSIG
-
-Bob output script
-
-    <alice pubkey> OP_CHECKSIG
 
